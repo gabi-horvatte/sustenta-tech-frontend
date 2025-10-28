@@ -6,12 +6,13 @@ import { decodeJwt } from '@/lib/decode-jwt';
 
 export const IAMProvider = ({ children }: { children: React.ReactNode }) => {
   const [authToken, setAuthToken] = useState<string | undefined>(undefined);
+  const [hasVerifiedToken, setHasVerifiedToken] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   const { data, error, fetch, loading } = useFetch<{ access_token: string; }>('/login');
-  const login = useCallback((email: string, password: string) => {
-    fetch({
+  const login = useCallback(async (email: string, password: string) => {
+    await fetch({
       name: 'POST',
       body: {
         email,
@@ -52,7 +53,9 @@ export const IAMProvider = ({ children }: { children: React.ReactNode }) => {
       handleLoginSuccess(authToken);
     else
       navigate('/login');
-  }, [handleLoginSuccess, navigate]); 
+  
+    setHasVerifiedToken(true);
+  }, []); 
 
   useEffect(() => {
     if (data) {
@@ -64,6 +67,7 @@ export const IAMProvider = ({ children }: { children: React.ReactNode }) => {
     <IAMContext.Provider 
       value={{ 
         authToken, 
+        hasVerifiedToken,
         login, 
         isLoginLoading: loading, 
         hasLoginError: !!error, 

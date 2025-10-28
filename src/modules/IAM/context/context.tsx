@@ -2,7 +2,8 @@ import React from 'react'
 
 type IAMContextType = {
     authToken?: string;
-    login: (email: string, password: string) => void;
+    hasVerifiedToken: boolean;
+    login: (email: string, password: string) => Promise<void>;
     isLoginLoading: boolean;
     hasLoginError: boolean;
     logout: () => void;
@@ -10,7 +11,8 @@ type IAMContextType = {
 
 export const IAMContext = React.createContext<IAMContextType>({
   authToken: undefined,
-  login: () => {},
+  hasVerifiedToken: false,
+  login: async () => {},
   isLoginLoading: false,
   hasLoginError: false,
   logout: () => {},

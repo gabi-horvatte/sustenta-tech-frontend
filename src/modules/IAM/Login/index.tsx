@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Controller } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 export const Login = () => {
   const { login, isLoginLoading, hasLoginError } = useContext(IAMContext);
@@ -20,8 +21,13 @@ export const Login = () => {
     },
   });
   
-  const onSubmit = (data: LoginFormSchema) => {
-    login(data.email, data.password);
+  const onSubmit = async (data: LoginFormSchema) => {
+    try {
+      await login(data.email, data.password);
+    } catch (error) {
+      console.error(error);
+      toast.error('Erro ao fazer login. Tente novamente mais tarde.');
+    }
   };
 
   useEffect(() => {
