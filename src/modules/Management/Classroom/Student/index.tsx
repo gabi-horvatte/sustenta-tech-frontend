@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router';
 import { StudentHeader } from './StudentHeader';
 import { StudentMaterialAssignments } from './StudentMaterialAssignments';
 import { StudentActivities } from './StudentActivities';

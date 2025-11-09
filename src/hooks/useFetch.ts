@@ -49,7 +49,9 @@ export function useFetch<T = unknown>(url: string) {
     setError(null);
     setLoading(true);
 
+    console.log('fetching', method);
     const axiosMethod = getAxiosMethod(method.name)
+    console.log('axiosMethod', axiosMethod);
     let promise: Promise<AxiosResponse<T>>;
     if ('body' in method)
       promise = (axiosMethod as typeof client.post | typeof client.put | typeof client.patch)(url, method.body, { headers })

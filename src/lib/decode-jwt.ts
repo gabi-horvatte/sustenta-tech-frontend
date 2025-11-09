@@ -7,11 +7,18 @@ export type DecodedJwt = {
     sub: string;
     exp: number;
     id: string;
+    email: string;
+    name: string;
+    last_name: string;
+    birth_date: string;
+    phone: string;
   } & ({
     role: 'TEACHER';
     manager: boolean;
   } | {
     role: 'STUDENT'
+    code: string;
+    classroom_id: string;
   });
 }
 

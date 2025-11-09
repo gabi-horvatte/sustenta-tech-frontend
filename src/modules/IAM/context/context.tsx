@@ -7,6 +7,21 @@ type IAMContextType = {
     isLoginLoading: boolean;
     hasLoginError: boolean;
     logout: () => void;
+    user: {
+      id: string;
+      email: string;
+      name: string;
+      last_name: string;
+      phone: string;
+      birth_date: string;
+    } & ({
+      role: 'TEACHER';
+      manager: boolean;
+    } | {
+      role: 'STUDENT';
+      code: string;
+      classroom_id: string;
+    }) | null;
 }
 
 export const IAMContext = React.createContext<IAMContextType>({
@@ -16,5 +31,6 @@ export const IAMContext = React.createContext<IAMContextType>({
   isLoginLoading: false,
   hasLoginError: false,
   logout: () => {},
+  user: null,
 });
 

@@ -1,4 +1,4 @@
-import { useLocation, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { TeacherImageRow } from '../../Home/TeacherImageRow';
 import { useFetch } from '@/hooks/useFetch';
 import { useEffect } from 'react';
@@ -8,6 +8,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/ca
 export const Classroom = () => {
   const { classroomId } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const { data: studentsData, error: studentsError, loading: studentsLoading, fetch: fetchStudents } = useFetch<{
     id: string;
@@ -49,7 +50,7 @@ export const Classroom = () => {
       {studentsData?.length ? (
         <div className="grid grid-cols-3 gap-4">
           {studentsData?.map((student) => (
-            <Card key={student.id} className="bg-lime-700/75 flex flex-col p-0 m-0">
+            <Card key={student.id} className="bg-lime-700/75 flex flex-col p-0 m-0 cursor-pointer" onClick={() => navigate(`/management/classroom/student/${student.id}?name=${student.name} ${student.last_name}&birth_date=${student.birth_date}&code=${student.code}&classroom_id=${classroomId}`)}>
               <CardHeader className="flex flex-col gap-1 items-start py-2 px-3">
                 <CardTitle className="text-lg font-bold text-white">{student.name} {student.last_name}</CardTitle>
                 <CardDescription className="text-white text-sm">{formatBirthDate(student.birth_date)} - {student.code}</CardDescription>
