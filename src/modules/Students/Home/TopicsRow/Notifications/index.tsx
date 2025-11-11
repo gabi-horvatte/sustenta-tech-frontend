@@ -1,25 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { useFetch } from '@/hooks/useFetch';
-import { useEffect } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useContext, useState } from 'react';
+import { Loader2, CheckIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
+import { NotificationContext } from '@/modules/Notifications/context/context';
 
 export const Notifications = () => {
   const navigate = useNavigate();
+  const [hoveredNotificationId, setHoveredNotificationId] = useState<string | null>(null);
   
-  const { data: notificationsData, loading: notificationsLoading, fetch: fetchNotifications } = useFetch<{
-    id: string;
-    account_id: string;
-    message: string;
-    url: string;
-  }[]>(`/notification`);
-
-  useEffect(() => {
-    fetchNotifications({
-      name: 'GET',
-    });
-  }, [fetchNotifications]);
+  const { 
+    notifications: notificationsData, 
+    notificationsLoading,
+    markNotificationsAsReadLoading,
+    markNotificationAsRead,
+  } = useContext(NotificationContext);
 
   return (
     <Card className="bg-yellow-900/90 border-none col-span-2 text-white flex flex-col gap-4">
@@ -33,16 +29,42 @@ export const Notifications = () => {
         {notificationsData?.length ? (
           <div className="flex flex-col gap-0">
             {notificationsData?.map((notification, i) => (
-              <div className="flex flex-col gap-0">
-                <p 
-                  className="text-sm font-bold hover:bg-yellow-900/80 rounded-md cursor-pointer p-4" 
-                  key={notification.id}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    navigate(notification.url);
-                  }}>{notification.message}                  
-                </p>
+              <div 
+                key={notification.id}
+                className="flex flex-col gap-0"
+                onMouseEnter={() => setHoveredNotificationId(notification.id)}
+                onMouseLeave={() => setHoveredNotificationId(null)}
+              >
+                <div className="flex flex-row justify-between items-center hover:bg-yellow-900/80 rounded-md p-4">
+                  <p 
+                    className="text-sm font-bold cursor-pointer flex-1" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      navigate(notification.url);
+                    }}
+                  >
+                    {notification.message}
+                  </p>
+                  {hoveredNotificationId === notification.id && (
+                    <Button
+                      size="icon-sm"
+                      variant="ghost"
+                      className="text-white hover:bg-white/20 h-6 w-6 cursor-pointer items-center justify-center flex ml-2"
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        await markNotificationAsRead(notification.id);
+                      }}
+                    >
+                      {markNotificationsAsReadLoading ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <CheckIcon className="w-4 h-4" />
+                      )}
+                    </Button>
+                  )}
+                </div>
                 {i < notificationsData?.length - 1 && <Separator />}
               </div>
             ))}

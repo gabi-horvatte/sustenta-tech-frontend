@@ -3,6 +3,7 @@ import { Login } from '../modules/IAM/Login';
 import { AnimatePresence, motion as m } from 'framer-motion';
 import { Home } from '@/modules/Management/Home';
 import { IAMProvider } from '@/modules/IAM/context/provider';
+import { NotificationProvider } from '@/modules/Notifications/context/provider';
 import { Header } from '@/components/header';
 import { Classrooms } from '@/modules/Management/Classroom/Classrooms';
 import { Loader2 } from 'lucide-react';
@@ -21,18 +22,10 @@ import { GlobalHome } from '@/modules/GlobalHome';
 
 function LayoutWithHeader() {
   const location = useLocation();
-  const navigate = useNavigate();
-
-  const { user } = useContext(IAMContext);
-  if (user?.role === 'STUDENT' && location.pathname.startsWith('/management')) {
-    navigate('/student/home');
-  } else if (user?.role === 'TEACHER' && location.pathname.startsWith('/student')) {
-    navigate('/management/home');
-  }
 
   // Header everywhere inside this layout; PageWrapper wraps each page
   return (
-    <div className="max-h-full h-full">
+    <div className="h-[100vh] flex flex-col">
       <Header />
       <AnimatePresence mode="wait">
         <PageWrapper key={location.pathname}>
@@ -60,25 +53,27 @@ export const AppRouter = () => {
   return (
     <BrowserRouter>
       <IAMProvider>
-        <Routes>
-          <Route element={<LayoutWithHeader />}>
-            <Route path="/" element={<GlobalHome />} />
-            <Route path="/management" element={<Home />} />
-            <Route path="/management/home" element={<Home />} />
-            <Route path="/management/classroom" element={<Classrooms />} />
-            <Route path="/management/classroom/:classroomId" element={<Classroom />} />
-            <Route path="/management/classroom/student/:studentId" element={<Student />} />
-            <Route path="/management/activities" element={<Activities />} />
-            <Route path="/management/activities/activity/:activityId" element={<Activity />} />
-            <Route path="/management/materials" element={<Materials />} />
-            <Route path="/student/home" element={<StudentHome />} />
-            <Route path="/student" element={<StudentHome />} />
-            <Route path="/students/activities" element={<StudentActivities />} />
-            <Route path="/students/materials" element={<StudentMaterials />} />
-            <Route path="/account" element={<Account />} />
-          </Route>
-          <Route path="/login" element={<LoginLayout />} />
-        </Routes>
+        <NotificationProvider>
+          <Routes>
+            <Route element={<LayoutWithHeader />}>
+              <Route path="/" element={<GlobalHome />} />
+              <Route path="/management" element={<Home />} />
+              <Route path="/management/home" element={<Home />} />
+              <Route path="/management/classroom" element={<Classrooms />} />
+              <Route path="/management/classroom/:classroomId" element={<Classroom />} />
+              <Route path="/management/classroom/student/:studentId" element={<Student />} />
+              <Route path="/management/activities" element={<Activities />} />
+              <Route path="/management/activities/activity/:activityId" element={<Activity />} />
+              <Route path="/management/materials" element={<Materials />} />
+              <Route path="/student/home" element={<StudentHome />} />
+              <Route path="/student" element={<StudentHome />} />
+              <Route path="/students/activities" element={<StudentActivities />} />
+              <Route path="/students/materials" element={<StudentMaterials />} />
+              <Route path="/account" element={<Account />} />
+            </Route>
+            <Route path="/login" element={<LoginLayout />} />
+          </Routes>
+        </NotificationProvider>
       </IAMProvider>
     </BrowserRouter>
   )
@@ -86,9 +81,17 @@ export const AppRouter = () => {
 
 const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   const { hasVerifiedToken } = useContext(IAMContext);
+  const navigate = useNavigate();
+  const { user } = useContext(IAMContext);
+
   if (!hasVerifiedToken)
-    return <Loader2 />
+    return <Loader2 className="w-32 h-32 animate-spin fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
   
+  if (user?.role === 'STUDENT' && location.pathname.startsWith('/management')) {
+    navigate('/student/home');
+  } else if (user?.role === 'TEACHER' && location.pathname.startsWith('/student')) {
+    navigate('/management/home');
+  }
 
   return (
     <m.div

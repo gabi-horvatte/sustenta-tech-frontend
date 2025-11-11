@@ -1,4 +1,4 @@
-import { formatBirthDate } from '@/utils';
+import { formatDateString } from '@/utils';
 import { IAMContext } from '../../context/context';
 import { useContext } from 'react';
 
@@ -16,7 +16,7 @@ export const AccountInfo = () => {
         </div>
         <div className="grid grid-cols-1 grid-rows-2 gap-0">
           <h5 className="text-xl font-bold text-yellow-900/80">Data de nascimento</h5>
-          <p className="text-md text-gray-500">{formatBirthDate(user?.birth_date ?? '')}</p>
+          <p className="text-md text-gray-500">{formatDateString(user?.birth_date ?? '')}</p>
         </div>
         <div className="grid grid-cols-1 grid-rows-2 gap-0">
           <h5 className="text-xl font-bold text-yellow-900/80">Email</h5>

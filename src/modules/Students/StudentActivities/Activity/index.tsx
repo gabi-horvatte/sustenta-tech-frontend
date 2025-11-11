@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
-import { CheckCircle, Clock, Link } from 'lucide-react';
+import { CheckCircle, Clock, Link, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useState } from 'react';
 
 export const Activity = ({
-  activity
+  activity,
 }: {
   activity: {
     activity_id: string;
@@ -15,9 +16,10 @@ export const Activity = ({
     activity_name: string;
     expires_at: string;
     url: string;
-  }
+  };
 }) => {
-  const { fetch: markAsCompleted } = useFetch<boolean>(`/activity/${activity.activity_id}/complete`);
+  const { fetch: markAsCompleted, loading: markAsCompletedLoading } = useFetch<boolean>(`/activity/${activity.activity_id}/complete`);
+  const [isCompleted, setIsCompleted] = useState(!!activity.completed_at);
 
   const handleMarkAsCompleted = async () => {
     try {
@@ -25,7 +27,8 @@ export const Activity = ({
       name: 'PATCH',
       body: {}
     });
-      toast.success('Atividade marcada como concluída');
+    setIsCompleted(true);
+    toast.success('Atividade marcada como concluída');
     } catch (error) {
       toast.error('Erro ao marcar atividade como concluída');
       console.error('Erro ao marcar atividade como concluída', error);
@@ -33,7 +36,7 @@ export const Activity = ({
   }
 
   return (
-  <Card key={activity.activity_id} className={activity.completed_at ? 'bg-lime-300/32' : ''}>
+  <Card key={activity.activity_id} className={new Date(activity.expires_at) < new Date() && !isCompleted ? 'bg-red-300/32' : isCompleted ? 'bg-lime-300/32' : ''}>
     <CardHeader>
       <div className="flex flex-row gap-2 items-center justify-center">
         <CardTitle className="text-center">
@@ -48,13 +51,14 @@ export const Activity = ({
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          window.open(activity.url, '_blank');
+          console.log('abrir link', activity.url);
+          window.open(`https://${activity.url.replace('https://', '').replace('http://', '')}`, '_blank', 'noopener,noreferrer');
         }}
       >
         <Link className="w-4 h-4" />
         Abrir link
       </Button>
-      {!activity.completed_at && new Date(activity.expires_at) > new Date() ? (
+      {!isCompleted && new Date(activity.expires_at) > new Date() ? (
       <Button
         variant="outline"
         className="cursor-pointer bg-lime-300/32 hover:bg-lime-300/50"
@@ -65,8 +69,12 @@ export const Activity = ({
           console.log('marcar como concluído');
         }}
       >
-        <CheckCircle className="w-4 h-4" />
-        Marcar como concluído
+        {markAsCompletedLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : (
+          <>
+            <CheckCircle className="w-4 h-4" />
+            Marcar como concluído
+          </>
+        )}
       </Button>
       ) : new Date(activity.expires_at) < new Date() ? (
           <p className="text-red-700/80 text-center">Expirado</p>

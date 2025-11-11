@@ -4,7 +4,11 @@ import { materialsContent } from '@/materials'
 import { useEffect } from 'react';
 import { CheckCircle, Clock, Loader2 } from 'lucide-react';
 
-export const StudentMaterialAssignments = () => {
+export const StudentMaterialAssignments = ({
+  studentId
+}: {
+  studentId: string;
+}) => {
 
   const { data: materialsAssignmentsData, loading: materialsLoading, fetch: fetchMaterials } = useFetch<{
     id: string;
@@ -12,7 +16,7 @@ export const StudentMaterialAssignments = () => {
     student_id: string;
     created_at: string;
     updated_at: string;
-  }[]>(`/material`);
+  }[]>(`/material?student_id=${studentId}`);
 
   useEffect(() => {
     fetchMaterials({
@@ -29,12 +33,12 @@ export const StudentMaterialAssignments = () => {
       ) : (
       <div className="grid grid-cols-3 nowrap gap-4">
         {materialsContent.map((material) => {
-          const materialAssignment = materialsAssignmentsData?.find((assignment) => assignment.type === material.type);
+          const materialAssignment = materialsAssignmentsData?.find((assignment) => assignment.id === material.id);
           
           return (
             <Card 
               key={material.title + material.description}
-              className="pt-0"
+              className="pt-0 border-3"
             >
             <CardHeader 
             style={{ backgroundImage: `url(${material.thumbnail})`, backgroundSize: 'cover', backgroundPosition: 'center' }}

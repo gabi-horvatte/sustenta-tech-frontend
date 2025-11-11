@@ -35,7 +35,7 @@ export function useFetch<T = unknown>(url: string) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<AxiosError | null>(null);
   const [loading, setLoading] = useState(false);
-  const { authToken } = useContext(IAMContext);
+  const { authToken, logout } = useContext(IAMContext);
 
   const headers = useMemo(() => {
     return {
@@ -60,9 +60,16 @@ export function useFetch<T = unknown>(url: string) {
     else
       promise = axiosMethod(url, { headers })
 
-    await promise.then(res => setData(res.data))
+    await promise.then(res => setData(res.data)).catch(err => {
+      setError(err);
+      console.log('err', err);
+      if (err.response?.data?.message === 'Invalid token' || err.response?.data?.message === 'Authentication required') {
+        logout();
+      }
+      throw err;
+    })
       .finally(() => setLoading(false))
-  }, [url, headers]);
+  }, [url, headers, logout]);
 
   return {
     data, error, loading, fetch

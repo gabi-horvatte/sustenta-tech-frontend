@@ -1,4 +1,4 @@
-import { formatBirthDate } from '@/utils';
+import { formatDateString } from '@/utils';
 import { useLocation } from 'react-router';
 import { useFetch } from '@/hooks/useFetch';
 import { useEffect } from 'react';
@@ -10,7 +10,7 @@ export const StudentHeader = () => {
 
   const name = searchParams.get('name');
   const birthDateParam = searchParams.get('birth_date');
-  const birthDate = birthDateParam ? formatBirthDate(birthDateParam) : '-';
+  const birthDate = birthDateParam ? formatDateString(birthDateParam) : '-';
   const code = searchParams.get('code') ?? '-';
   const classroomId = searchParams.get('classroom_id') ?? '';
 

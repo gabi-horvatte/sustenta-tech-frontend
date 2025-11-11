@@ -5,6 +5,7 @@ export const materialsContent = [{
   thumbnail: 'https://i.ytimg.com/vi/h8-qemIbXbo/maxresdefault.jpg',
   title: 'Video 1',
   description: 'Description 1',
+  authorNames: ['Author 1', 'Author 2'],
 }, {
   id: '2',
   type: 'video',
@@ -12,6 +13,7 @@ export const materialsContent = [{
   thumbnail: 'https://i.ytimg.com/vi/h8-qemIbXbo/maxresdefault.jpg',
   title: 'Video 2',
   description: 'Description 2',
+  authorNames: ['Author 3', 'Author 4'],
 }, {
   id: '3',
   type: 'video',
@@ -19,6 +21,7 @@ export const materialsContent = [{
   thumbnail: 'https://i.ytimg.com/vi/h8-qemIbXbo/maxresdefault.jpg',
   title: 'Video 3',
   description: 'Description 3',
+  authorNames: ['Author 5', 'Author 6'],
 }, {
   id: '4',
   type: 'video',
@@ -26,6 +29,7 @@ export const materialsContent = [{
   thumbnail: 'https://i.ytimg.com/vi/h8-qemIbXbo/maxresdefault.jpg',
   title: 'Video 4',
   description: 'Description 4',
+  authorNames: ['Author 7', 'Author 8'],
 }, {
   id: '5',
   type: 'video',
@@ -33,4 +37,5 @@ export const materialsContent = [{
   thumbnail: 'https://i.ytimg.com/vi/h8-qemIbXbo/maxresdefault.jpg',
   title: 'Video 5',
   description: 'Description 5',
+  authorNames: ['Author 9', 'Author 10'],
 }];
