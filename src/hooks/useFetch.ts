@@ -3,7 +3,7 @@ import axios, { AxiosError, type AxiosResponse } from 'axios'
 import { IAMContext } from '../modules/IAM/context/context'
 
 const client = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:3000',
 });
 
 const getAxiosMethod = (method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH') => {
