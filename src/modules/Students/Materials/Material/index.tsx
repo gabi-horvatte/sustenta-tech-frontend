@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import { useFetch } from '@/hooks/useFetch';
 import { CheckCircle, Clock, Link, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -45,7 +46,7 @@ export const Material = ({
   return (
     <Card 
               key={materialAssignment.title + materialAssignment.description}
-              className="pt-0"
+              className="pt-0 pb-4 gap-4"
             >
             <CardHeader 
             style={{ backgroundImage: `url(${materialAssignment.thumbnail})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
@@ -80,7 +81,9 @@ export const Material = ({
               <CardDescription>{materialAssignment.description}</CardDescription>
             </CardContent>
             {!isCompleted ? (
-            <CardFooter className="flex flex-row gap-2 items-center justify-center">
+              <>
+              <Separator />
+            <CardFooter className="flex flex-col gap-2">
               <Button variant="outline" className="cursor-pointer" onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -100,6 +103,7 @@ export const Material = ({
                 </>)}
               </Button>
             </CardFooter>
+            </>
             ) : <></>}
           </Card>
   )
