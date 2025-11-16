@@ -9,12 +9,14 @@ export const Activity = () => {
 
   const name = searchParams.get('name');
   const description = searchParams.get('description');
-  const classroomName = searchParams.get('classroom_name');
-  const createdAt = searchParams.get('created_at');
-  const updatedAt = searchParams.get('updated_at');
-  const expiresAt = searchParams.get('expires_at');
+  // const classroomName = searchParams.get('classroom_name');
+  // const createdAt = searchParams.get('created_at');
+  // const updatedAt = searchParams.get('updated_at');
+  // const expiresAt = searchParams.get('expires_at');
 
-  const { data: activityData, error: activityError, loading: activityLoading, fetch: fetchActivity } = useFetch<{
+  const { data: activityData,
+    // , error: activityError, loading: activityLoading,
+     fetch: fetchActivity } = useFetch<{
     activity_id: string;
     student_id: string;
     completed_at: string | null;
