@@ -84,7 +84,7 @@ export const Material = ({
               <>
               <Separator />
             <CardFooter className="flex flex-col gap-2">
-              <Button variant="outline" className="cursor-pointer" onClick={(e) => {
+              <Button variant="outline" className="cursor-pointer w-full" onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 window.open(materialAssignment.url, '_blank');
@@ -92,7 +92,7 @@ export const Material = ({
                 <Link className="w-4 h-4" />
                 Abrir link
               </Button>
-              <Button variant="outline" className="cursor-pointer" disabled={markAsCompletedLoading} onClick={(e) => {
+              <Button variant="outline" className="cursor-pointer w-full bg-lime-300/32 hover:bg-lime-300/50" disabled={markAsCompletedLoading} onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 handleMarkAsCompleted();
