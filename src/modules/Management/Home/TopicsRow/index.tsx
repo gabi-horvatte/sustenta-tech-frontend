@@ -1,6 +1,8 @@
 import { Card, CardContent } from '@/components/ui/card'
-import classroomIcon from '@/assets/images/classroom-icon.png';
+import ClassroomIcon from '@/assets/images/classroom.svg?react';
 import { useNavigate } from 'react-router';
+import ActivityIcon from '@/assets/images/assignment.svg?react';
+import MaterialsIcon from '@/assets/images/materials.svg?react';
 
 export const TopicsRow = () => {
   const navigate = useNavigate();
@@ -13,7 +15,7 @@ export const TopicsRow = () => {
           console.log('clicked');
           }}>
           <div>
-            <img src={classroomIcon} alt="Turmas" className="w-15 h-15" />
+            <ClassroomIcon className="w-15 h-15 fill-white" />
           </div>
           <CardContent className="text-white">Turmas</CardContent>
         </Card>
@@ -27,7 +29,7 @@ export const TopicsRow = () => {
         }}
         >
           <div>
-            <img src={classroomIcon} alt="Atividades" className="w-15 h-15" />
+            <ActivityIcon className="w-15 h-15 fill-white" />
           </div>
           <CardContent className="text-white">Atividades</CardContent>
         </Card>
@@ -37,7 +39,7 @@ export const TopicsRow = () => {
           navigate('/management/materials');
         }}>
           <div>
-            <img src={classroomIcon} alt="Materiais" className="w-15 h-15" />
+            <MaterialsIcon className="w-15 h-15 fill-white" />
           </div>
           <CardContent className="text-white">Materiais</CardContent>
         </Card>

@@ -1,7 +1,8 @@
 import { Card, CardContent } from '@/components/ui/card'
-import classroomIcon from '@/assets/images/classroom-icon.png';
 import { useNavigate } from 'react-router';
 import { Notifications } from './Notifications';
+import ActivityIcon from '@/assets/images/assignment.svg?react';
+import MaterialsIcon from '@/assets/images/materials.svg?react';
 
 export const TopicsRow = () => {
   const navigate = useNavigate();
@@ -9,19 +10,19 @@ export const TopicsRow = () => {
   return (
       <section id="management-home-cards-section" className="grid grid-cols-3 gap-12 full-width justify-between">
         <div className="flex flex-col gap-4">
-        <Card className="py-[2vh] items-center gap-2 bg-white px-[2.5vw] cursor-pointer hover:bg-lime-700/95 transition-all duration-150" onClick={(e) => {
+        <Card className="py-[2vh] items-center gap-2 bg-lime-700/80 px-[2.5vw] cursor-pointer hover:bg-lime-700/95 transition-all duration-150" onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           navigate('/students/activities');
           console.log('clicked');
           }}>
-          <div>
-            <img src={classroomIcon} alt="Turmas" className="w-15 h-15" />
+          <div className="text-white">
+            <ActivityIcon className="w-15 h-15 fill-white" />
           </div>
-          <CardContent className="text-lg font-bold text-lime-700/80">Atividades</CardContent>
+          <CardContent className="text-lg font-bold text-white">Atividades</CardContent>
         </Card>
         <Card 
-        className="py-[2vh] items-center gap-2 bg-white px-[2.5vw] cursor-pointer hover:bg-lime-700/95 transition-all duration-150"
+        className="py-[2vh] items-center gap-2 bg-lime-700/80 px-[2.5vw] cursor-pointer hover:bg-lime-700/95 transition-all duration-150"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -30,9 +31,9 @@ export const TopicsRow = () => {
         }}
         >
           <div>
-            <img src={classroomIcon} alt="Atividades" className="w-15 h-15" />
+            <MaterialsIcon className="w-15 h-15 fill-white" />
           </div>
-          <CardContent className="text-lg font-bold text-lime-700/80">Materiais</CardContent>
+          <CardContent className="text-lg font-bold text-white">Materiais</CardContent>
         </Card>
         </div>
         <Notifications />

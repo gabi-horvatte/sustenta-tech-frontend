@@ -1,13 +1,13 @@
 import { AccountHeader } from './AccountHeader';
 import { AccountInfo } from './AccountInfo';
-import childrenImage from '@/assets/images/children-background.png';
+import childrenImage from '@/assets/images/children-background.png?format=webp';
 
 
 export const Account = () => {
   return (
     <div className="h-full w-full relative">
     <div 
-      className="h-full w-full" 
+      className="h-full w-full object-cover object-center"
       style={{ 
         backgroundImage: `url(${childrenImage})`, 
         backgroundSize: 'cover', 

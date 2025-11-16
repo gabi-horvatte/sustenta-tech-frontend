@@ -1,10 +1,11 @@
 import { useFetch } from '@/hooks/useFetch';
+import { formatDateTimeString } from '@/utils';
 import { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router';
 
 export const Activity = () => {
   const { activityId } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const name = searchParams.get('name');
   const description = searchParams.get('description');
@@ -44,7 +45,7 @@ export const Activity = () => {
             <tr key={activityStudent.student_id} className="w-full">
               <td className="text-left text-yellow-900/80">{activityStudent.student_name}</td>
               <td className="text-right text-yellow-900/80">
-                {activityStudent.completed_at ?? 'Não concluído'}
+                {activityStudent.completed_at ? formatDateTimeString(activityStudent.completed_at) : 'Não concluído'}
                 </td>
             </tr>
           ))}

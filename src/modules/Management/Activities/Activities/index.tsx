@@ -1,4 +1,4 @@
-import classroomImage from '@/assets/images/classroom-children.jpeg';
+import classroomImage from '@/assets/images/classroom-children.jpeg?format=webp';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ export const Activities = () => {
   const navigate = useNavigate();
   const {
     data: activitiesData,
-    error: activitiesError, 
+    error: activitiesError,
     loading: activitiesLoading,
     fetch: fetchActivities
   } = useFetch<{
@@ -65,14 +65,33 @@ export const Activities = () => {
   }, [fetchClassrooms]);
 
   return (
-    <div className="max-w-[40vw] mx-auto flex flex-col gap-8 pt-8 pb-0">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-5xl font-bold text-center text-lime-700/80">Painel administrativo</h1>
-        <h5 className="text-xl font-bold text-center text-yellow-900/80">Atividades</h5>
+    <div className="max-w-[40vw] mx-auto flex flex-col gap-4 pt-8 pb-4">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-5xl font-bold text-center text-lime-700/80">Painel administrativo</h1>
+          <h5 className="text-xl font-bold text-center text-yellow-900/80">Atividades</h5>
+        </div>
+        <Card className="p-0 overflow-hidden max-h-[50vh]">
+          <img
+            src={classroomImage}
+            alt="Atividades"
+            className="w-full h-full object-cover object-center"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+            width={1920}
+            height={1080}
+          />
+        </Card>
+        {classroomsError ? (
+          <div className="flex justify-center items-center">
+            <p className="text-center text-gray-500">Erro ao carregar turmas. Tente novamente mais tarde.</p>
+          </div>
+        ) : (
+          <CreateActivityButton classroomsData={classroomsData ?? []} refetchActivities={() => fetchActivities({ name: 'GET' })} />
+        )}
+
       </div>
-      <Card className="p-0 overflow-hidden max-h-[50vh]">
-        <img src={classroomImage} alt="Atividades" className="w-full h-full object-cover object-center" />
-      </Card>
       {(activitiesData?.length ?? 0) > 0 ? (
         <div className="grid grid-cols-3 gap-2">
           {mappedActivitiesData?.map((activity) => (
@@ -101,28 +120,21 @@ export const Activities = () => {
             </Card>
           ))}
         </div>
-      ) : 
+      ) :
         activitiesLoading ? (
           <div className="flex justify-center items-center">
             <Loader2 className="w-8 h-8 animate-spin" />
           </div>
         ) :
-        activitiesError ? (
-          <div className="flex justify-center items-center">
-            <p className="text-center text-gray-500">Erro ao carregar atividades. Tente novamente mais tarde.</p>
-          </div>
-        ) : (
-          <div>
-            <p className="text-center text-gray-500">Você ainda não possui nenhuma atividade.</p>
-          </div>
-        )}
-        {classroomsError ? (
-          <div className="flex justify-center items-center">
-            <p className="text-center text-gray-500">Erro ao carregar turmas. Tente novamente mais tarde.</p>
-          </div>
-        ) : (
-          <CreateActivityButton classroomsData={classroomsData ?? []} refetchActivities={() => fetchActivities({ name: 'GET' })} />
-        )}
+          activitiesError ? (
+            <div className="flex justify-center items-center">
+              <p className="text-center text-gray-500">Erro ao carregar atividades. Tente novamente mais tarde.</p>
+            </div>
+          ) : (
+            <div>
+              <p className="text-center text-gray-500">Você ainda não possui nenhuma atividade.</p>
+            </div>
+          )}
     </div>
   )
 }
