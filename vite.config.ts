@@ -7,9 +7,14 @@ import { imagetools } from 'vite-imagetools'
 
 // https://vite.dev/config/
 export default defineConfig({
+  preview: {
+    host: '0.0.0.0',
+    allowedHosts: true,
+    cors: true,
+  },
   plugins: [
-    react(), 
-    svgr(), 
+    react(),
+    svgr(),
     tailwindcss(),
     imagetools()
   ],
