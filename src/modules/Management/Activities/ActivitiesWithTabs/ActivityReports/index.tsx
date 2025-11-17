@@ -15,9 +15,6 @@ import {
   ResponsiveContainer,
   LineChart,
   Line,
-  PieChart,
-  Pie,
-  Cell
 } from 'recharts';
 import { 
   TrendingUp, 
@@ -79,7 +76,6 @@ type ActivityReportsData = {
   }[];
 };
 
-const COLORS = ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
 
 const getDifficultyColor = (rating: string) => {
   switch (rating) {

@@ -1,9 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useFetch } from '@/hooks/useFetch';
 import { CheckCircle, Clock, BookOpen } from 'lucide-react';
-import { toast } from 'sonner';
-import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 export const Activity = ({
@@ -20,22 +17,8 @@ export const Activity = ({
   };
 }) => {
   const navigate = useNavigate();
-  const { fetch: markAsCompleted, loading: markAsCompletedLoading } = useFetch<boolean>(`/activity/${activity.activity_id}/complete`);
-  const [isCompleted, setIsCompleted] = useState(!!activity.completed_at);
+  const isCompleted = !!activity.completed_at;
 
-  const handleMarkAsCompleted = async () => {
-    try {
-    await markAsCompleted({
-      name: 'PATCH',
-      body: {}
-    });
-    setIsCompleted(true);
-    toast.success('Atividade marcada como concluída');
-    } catch (error) {
-      toast.error('Erro ao marcar atividade como concluída');
-      console.error('Erro ao marcar atividade como concluída', error);
-    }
-  }
 
   return (
   <Card key={activity.activity_id} className={new Date(activity.expires_at) < new Date() && !isCompleted ? 'bg-red-300/32' : isCompleted ? 'bg-lime-300/32' : ''}>

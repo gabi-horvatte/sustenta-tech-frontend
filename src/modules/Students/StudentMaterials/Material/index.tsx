@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { useFetch } from '@/hooks/useFetch';
 import { CheckCircle, Clock, Link, Loader2 } from 'lucide-react';
 import { useEffect, useState, useContext } from 'react';

@@ -101,7 +101,7 @@ export const ViewActivityTemplate = () => {
           <CardContent className="space-y-6">
             {template.questions
               .sort((a, b) => a.question_order - b.question_order)
-              .map((question, index) => (
+              .map((question) => (
                 <Card key={question.id} className="border-2">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-base">

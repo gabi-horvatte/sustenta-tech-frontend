@@ -1,11 +1,10 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
 import { ArrowLeft, CheckCircle, Clock, User, ExternalLink } from 'lucide-react';
 import { Loader2 } from 'lucide-react';
-import { IAMContext } from '@/modules/IAM/context/context';
 
 type MaterialAssignmentDetail = {
   id: string;
@@ -29,7 +28,6 @@ export const MaterialAssignmentDetail = () => {
   const { assignmentId } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { user } = useContext(IAMContext);
   
   const materialName = searchParams.get('name');
   const classroomName = searchParams.get('classroom');

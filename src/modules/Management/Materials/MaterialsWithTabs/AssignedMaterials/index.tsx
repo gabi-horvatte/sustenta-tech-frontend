@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
 import { useNavigate } from 'react-router';
-import { Loader2, FileText, Clock, ExternalLink } from 'lucide-react';
+import { Loader2, FileText, Clock } from 'lucide-react';
 import { IAMContext } from '@/modules/IAM/context/context';
 
 type MaterialAssignment = {

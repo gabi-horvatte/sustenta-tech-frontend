@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
@@ -60,8 +60,6 @@ export const QuizReview = () => {
   const { user } = useContext(IAMContext);
   
   const studentId = searchParams.get('studentId');
-  const viewMode = searchParams.get('viewMode');
-  const isReviewMode = viewMode === 'review';
   
   // If no studentId provided and user is a student, use their own ID
   const targetStudentId = studentId || (user?.role === 'STUDENT' ? user.id : null);

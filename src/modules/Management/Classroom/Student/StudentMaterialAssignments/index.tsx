@@ -2,14 +2,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useFetch } from '@/hooks/useFetch';
 import { useEffect } from 'react';
 import { CheckCircle, Clock, Loader2 } from 'lucide-react';
-import { useNavigate } from 'react-router';
 
 export const StudentMaterialAssignments = ({
   studentId
 }: {
   studentId: string;
 }) => {
-  const navigate = useNavigate();
 
   const { data: materialsAssignmentsData, loading: materialsLoading, fetch: fetchMaterials } = useFetch<{
     assignment_id: string;

@@ -325,12 +325,12 @@ export const MaterialReports = () => {
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      label={({ material_type, total_materials }) => `${material_type}: ${total_materials}`}
+                      label={(props: any) => `${props.material_type}: ${props.total_materials}`}
                       outerRadius={80}
                       fill="#8884d8"
                       dataKey="total_materials"
                     >
-                      {reportsData.material_type_analysis.map((entry, index) => (
+                      {reportsData.material_type_analysis.map((_, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>

@@ -4,7 +4,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useFetch } from '@/hooks/useFetch';
 import { useNavigate } from 'react-router';
 import { Loader2, Plus, Eye, Users } from 'lucide-react';
-import { toast } from 'sonner';
 
 type ActivityTemplate = {
   id: string;

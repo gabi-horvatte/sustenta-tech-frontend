@@ -1,10 +1,9 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
 import { useNavigate } from 'react-router';
 import { Loader2, Plus, ExternalLink, FileText } from 'lucide-react';
-import { IAMContext } from '@/modules/IAM/context/context';
 
 type MaterialTemplate = {
   id: string;
@@ -20,7 +19,6 @@ type MaterialTemplate = {
 
 export const MaterialTemplateLibrary = () => {
   const navigate = useNavigate();
-  const { user } = useContext(IAMContext);
   const { data: templates, loading, error, fetch: fetchTemplates } = useFetch<MaterialTemplate[]>('/material-template');
 
   useEffect(() => {

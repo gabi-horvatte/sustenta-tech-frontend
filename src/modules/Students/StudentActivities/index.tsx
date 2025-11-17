@@ -16,6 +16,7 @@ export const StudentActivities = () => {
     completed_at: string | null;
     activity_name: string;
     expires_at: string;
+    activity_template_id: string;
     url: string;
   }[]>(`/activity_student`);
 
