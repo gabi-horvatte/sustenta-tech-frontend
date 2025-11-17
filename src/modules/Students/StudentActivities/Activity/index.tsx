@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
-import { CheckCircle, Clock, Link, Loader2 } from 'lucide-react';
+import { CheckCircle, Clock, BookOpen } from 'lucide-react';
 import { toast } from 'sonner';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 export const Activity = ({
   activity,
@@ -15,9 +16,10 @@ export const Activity = ({
     completed_at: string | null;
     activity_name: string;
     expires_at: string;
-    url: string;
+    activity_template_id: string;
   };
 }) => {
+  const navigate = useNavigate();
   const { fetch: markAsCompleted, loading: markAsCompletedLoading } = useFetch<boolean>(`/activity/${activity.activity_id}/complete`);
   const [isCompleted, setIsCompleted] = useState(!!activity.completed_at);
 
@@ -45,42 +47,33 @@ export const Activity = ({
         {activity.completed_at ? <CheckCircle className="w-4 h-4 text-lime-700/80" /> : new Date(activity.expires_at) > new Date() ? <Clock className="w-4 h-4 text-yellow-700/80" /> : <Clock className="w-4 h-4 text-red-700/80" />}
       </div>
       <CardDescription>{activity.description}</CardDescription>
+      
+      {/* Quiz-based activity */}
       <Button
         variant="outline"
         className="cursor-pointer"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          console.log('abrir link', activity.url);
-          window.open(`https://${activity.url.replace('https://', '').replace('http://', '')}`, '_blank', 'noopener,noreferrer');
+          if (isCompleted) {
+            // Go to review mode if completed
+            navigate(`/student/quiz/${activity.activity_id}/review`);
+          } else {
+            // Go to quiz if not completed
+            navigate(`/student/quiz/${activity.activity_id}`);
+          }
         }}
+        disabled={new Date(activity.expires_at) < new Date() && !isCompleted}
       >
-        <Link className="w-4 h-4" />
-        Abrir link
+        <BookOpen className="w-4 h-4 mr-2" />
+        {isCompleted ? 'Ver Respostas' : 'Iniciar Quiz'}
       </Button>
-      {!isCompleted && new Date(activity.expires_at) > new Date() ? (
-      <Button
-        variant="outline"
-        className="cursor-pointer bg-lime-300/32 hover:bg-lime-300/50"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          handleMarkAsCompleted();
-          console.log('marcar como concluído');
-        }}
-      >
-        {markAsCompletedLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : (
-          <>
-            <CheckCircle className="w-4 h-4" />
-            Marcar como concluído
-          </>
-        )}
-      </Button>
-      ) : new Date(activity.expires_at) < new Date() ? (
-          <p className="text-red-700/80 text-center">Expirado</p>
-      ) : (
-          <p className="text-lime-700/80 text-center">Concluído</p>
-      )}
+      {/* Status display */}
+      {new Date(activity.expires_at) < new Date() ? (
+        <p className="text-red-700/80 text-center">Expirado</p>
+      ) : isCompleted ? (
+        <p className="text-lime-700/80 text-center">Concluído</p>
+      ) : null}
     </CardHeader>
   </Card>
   )
