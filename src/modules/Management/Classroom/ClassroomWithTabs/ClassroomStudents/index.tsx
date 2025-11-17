@@ -75,7 +75,7 @@ export const ClassroomStudents = ({ classroomId }: ClassroomStudentsProps) => {
           </Button>
         </div>
         <AddStudentModal 
-          classroomId={classroomId} 
+          classroomId={classroomId || null} 
           open={addStudentOpen} 
           setOpen={setAddStudentOpen} 
           onSuccess={() => fetchStudents({ name: 'GET' })} 
@@ -125,7 +125,7 @@ export const ClassroomStudents = ({ classroomId }: ClassroomStudentsProps) => {
         </div>
       </div>
       <AddStudentModal 
-        classroomId={classroomId} 
+        classroomId={classroomId || null} 
         open={addStudentOpen} 
         setOpen={setAddStudentOpen} 
         onSuccess={() => fetchStudents({ name: 'GET' })} 
