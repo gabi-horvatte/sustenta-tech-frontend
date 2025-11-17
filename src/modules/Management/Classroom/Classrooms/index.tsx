@@ -111,8 +111,17 @@ export const Classrooms = () => {
               </div>
             )}
       </div>
-      <CreateClassroomModal open={open} setOpen={setOpen} />
-      <AddStudentModal classroomId={classroomId} open={addStudentOpen} setOpen={setAddStudentOpen} />
+      <CreateClassroomModal 
+        open={open} 
+        setOpen={setOpen} 
+        onSuccess={() => fetchClassrooms({ name: 'GET' })} 
+      />
+      <AddStudentModal 
+        classroomId={classroomId} 
+        open={addStudentOpen} 
+        setOpen={setAddStudentOpen} 
+        onSuccess={() => fetchClassrooms({ name: 'GET' })} 
+      />
     </>
   )
 }

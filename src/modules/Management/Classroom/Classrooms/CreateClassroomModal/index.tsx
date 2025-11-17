@@ -12,11 +12,13 @@ import { toast } from 'sonner';
 type CreateClassroomModalProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  onSuccess?: () => void;
 }
 
 export const CreateClassroomModal = ({
   open,
   setOpen,
+  onSuccess,
 }: CreateClassroomModalProps) => {
   const { fetch, loading: isCreateClassroomLoading } = useFetch('/classroom');
   const form = useForm<CreateClassroomFormSchema>({
@@ -35,6 +37,8 @@ export const CreateClassroomModal = ({
       setOpen(false);
       toast.success('Turma criada com sucesso');
       form.reset();
+      // Trigger refetch of classrooms list
+      onSuccess?.();
     } catch (error) {
       console.log(error);
       toast.error('Erro ao criar turma. Tente novamente mais tarde.');

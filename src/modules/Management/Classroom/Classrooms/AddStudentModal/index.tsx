@@ -16,9 +16,10 @@ type AddStudentModalProps = {
   classroomId: string | null;
   open: boolean;
   setOpen: (open: boolean) => void;
+  onSuccess?: () => void;
 }
 
-export const AddStudentModal = ({ classroomId, open, setOpen }: AddStudentModalProps) => {
+export const AddStudentModal = ({ classroomId, open, setOpen, onSuccess }: AddStudentModalProps) => {
   const { fetch, error: hasAddStudentError, loading: isAddStudentLoading } = useFetch('/student');
 
   const form = useForm<AddStudentFormSchema>({
@@ -52,6 +53,8 @@ export const AddStudentModal = ({ classroomId, open, setOpen }: AddStudentModalP
       setOpen(false);
       toast.success('Aluno cadastrado com sucesso');
       form.reset();
+      // Trigger refetch of classrooms list
+      onSuccess?.();
     } catch (error) {
       toast.error('Erro ao cadastrar aluno');
       console.log(error);
