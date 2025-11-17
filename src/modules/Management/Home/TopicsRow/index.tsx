@@ -7,7 +7,7 @@ import MaterialsIcon from '@/assets/images/materials.svg?react';
 export const TopicsRow = () => {
   const navigate = useNavigate();
   return (
-      <section id="management-home-cards-section" className="flex flex-row full-width justify-between">
+      <section id="management-home-cards-section" className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 w-full">
         <Card className="py-[2vh] items-center gap-2 bg-lime-700/80 px-[2.5vw] cursor-pointer hover:bg-lime-700/95 transition-all duration-150" onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -25,7 +25,6 @@ export const TopicsRow = () => {
           e.preventDefault();
           e.stopPropagation();
           navigate('/management/activities');
-          console.log('clicked');
         }}
         >
           <div>

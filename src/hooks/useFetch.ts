@@ -22,13 +22,16 @@ const getAxiosMethod = (method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH') => 
 }
 
 type FetchMethod = {
-  name: 'GET'
+  name: 'GET';
+  url?: string;
 } | {
   name: 'POST' | 'PUT' | 'PATCH';
   body: unknown;
+  url?: string;
 } | {
   name: 'DELETE';
   id: string;
+  url?: string;
 }
 
 export function useFetch<T = unknown>(url: string) {
@@ -52,13 +55,18 @@ export function useFetch<T = unknown>(url: string) {
     console.log('fetching', method);
     const axiosMethod = getAxiosMethod(method.name)
     console.log('axiosMethod', axiosMethod);
+    
+    // Use dynamic URL if provided, otherwise use the default URL
+    const requestUrl = method.url || url;
+    console.log('Using URL:', requestUrl);
+    
     let promise: Promise<AxiosResponse<T>>;
     if ('body' in method)
-      promise = (axiosMethod as typeof client.post | typeof client.put | typeof client.patch)(url, method.body, { headers })
+      promise = (axiosMethod as typeof client.post | typeof client.put | typeof client.patch)(requestUrl, method.body, { headers })
     else if ('id' in method)
-      promise = (axiosMethod as typeof client.delete)(`${url}/${method.id}`, { headers })
+      promise = (axiosMethod as typeof client.delete)(`${requestUrl}/${method.id}`, { headers })
     else
-      promise = axiosMethod(url, { headers })
+      promise = axiosMethod(requestUrl, { headers })
 
     await promise.then(res => setData(res.data)).catch(err => {
       setError(err);
