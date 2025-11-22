@@ -84,15 +84,15 @@ export const AddStudentModal = ({ classroomId, open, setOpen, onSuccess }: AddSt
   }, [hasAddStudentError, form]);
 
   return (
-    <Modal 
-        title="Cadastrar aluno" 
-        open={open} 
+    <Modal
+        title="Cadastrar aluno"
+        open={open}
         onClose={() => setOpen(false)}
-        className=""
+        className="max-h-[90vh] overflow-hidden flex flex-col"
         centerTitle={true}
-      // w-full max-w-md grid row-span-full py-10
       >
-        <form id="add-student-form" onSubmit={form.handleSubmit(onSubmit)} onFocus={() => form.clearErrors()} className="flex flex-col gap-4">
+        <div className="flex-1 overflow-y-auto">
+          <form id="add-student-form" onSubmit={form.handleSubmit(onSubmit)} onFocus={() => form.clearErrors()} className="flex flex-col gap-4 pr-2">
           <FieldGroup>
             <Controller
               name="name"
@@ -255,14 +255,15 @@ export const AddStudentModal = ({ classroomId, open, setOpen, onSuccess }: AddSt
               )}
             />
           </FieldGroup>
-          <Button 
-            type="submit" 
-            form="add-student-form" 
-            className="bg-lime-800 text-white hover:bg-lime-800/90 w-full cursor-pointer" 
-            disabled={isDisabled}>
-            {isAddStudentLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Cadastrar'}
-          </Button>
-        </form>
+          </form>
+        </div>
+        <Button
+          type="submit"
+          form="add-student-form"
+          className="bg-lime-800 text-white hover:bg-lime-800/90 w-full cursor-pointer mt-4"
+          disabled={isDisabled}>
+          {isAddStudentLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Cadastrar'}
+        </Button>
       </Modal>
   )
 }

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
 import { useNavigate } from 'react-router';
-import { Loader2, Plus, Eye, Users } from 'lucide-react';
+import { Loader2, Plus, Eye, Users, Edit } from 'lucide-react';
 
 type ActivityTemplate = {
   id: string;
@@ -51,7 +51,7 @@ export const ActivityTemplateLibrary = () => {
             Navegue e atribua atividades de quiz às suas turmas
           </p>
         </div>
-        <Button onClick={() => navigate('/management/activity-templates/create')}>
+        <Button className="cursor-pointer" onClick={() => navigate('/management/activity-templates/create')}>
           <Plus className="w-4 h-4 mr-2" />
           Criar Novo Modelo
         </Button>
@@ -87,15 +87,24 @@ export const ActivityTemplateLibrary = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleViewTemplate(template.id)}
-                      className="flex-1"
+                      className="flex-1 cursor-pointer"
                     >
                       <Eye className="w-3 h-3 mr-1" />
                       Ver
                     </Button>
                     <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => navigate(`/management/activity-templates/edit/${template.id}`)}
+                      className="flex-1 cursor-pointer"
+                    >
+                      <Edit className="w-3 h-3 mr-1" />
+                      Editar
+                    </Button>
+                    <Button
                       size="sm"
                       onClick={() => handleAssignTemplate(template.id, template.name)}
-                      className="flex-1 bg-lime-600 hover:bg-lime-700"
+                      className="flex-1 bg-lime-600 hover:bg-lime-700 cursor-pointer"
                     >
                       <Users className="w-3 h-3 mr-1" />
                       Atribuir
@@ -113,7 +122,7 @@ export const ActivityTemplateLibrary = () => {
             <p className="text-lg">Nenhum modelo de atividade encontrado</p>
             <p className="text-sm">Crie seu primeiro modelo para começar</p>
           </div>
-          <Button onClick={() => navigate('/management/activity-templates/create')}>
+          <Button className="cursor-pointer" onClick={() => navigate('/management/activity-templates/create')}>
             <Plus className="w-4 h-4 mr-2" />
             Criar Modelo de Atividade
           </Button>

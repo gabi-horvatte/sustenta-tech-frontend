@@ -23,10 +23,12 @@ import { QuizActivity } from '@/modules/Students/QuizActivity';
 import { QuizReview } from '@/modules/Students/QuizReview';
 import { GlobalHome } from '@/modules/GlobalHome';
 import { CreateActivityTemplate } from '@/modules/Management/ActivityTemplates/CreateActivityTemplate';
+import { EditActivityTemplate } from '@/modules/Management/ActivityTemplates/EditActivityTemplate';
 import { ActivityTemplateLibrary } from '@/modules/Management/ActivityTemplates/ActivityTemplateLibrary';
 import { ViewActivityTemplate } from '@/modules/Management/ActivityTemplates/ViewActivityTemplate';
 import { AssignActivity } from '@/modules/Management/ActivityTemplates/AssignActivity';
 import { CreateMaterialTemplate } from '@/modules/Management/MaterialTemplates/CreateMaterialTemplate';
+import { EditMaterialTemplate } from '@/modules/Management/MaterialTemplates/EditMaterialTemplate';
 import { AssignMaterial } from '@/modules/Management/MaterialTemplates/AssignMaterial';
 import { MaterialAssignmentDetail } from '@/modules/Management/Materials/MaterialAssignmentDetail';
 
@@ -79,11 +81,13 @@ export const AppRouter = () => {
               {/* Activity Templates */}
               <Route path="/management/activity-templates" element={<ActivityTemplateLibrary />} />
               <Route path="/management/activity-templates/create" element={<CreateActivityTemplate />} />
+              <Route path="/management/activity-templates/edit/:id" element={<EditActivityTemplate />} />
               <Route path="/management/activity-templates/:templateId" element={<ViewActivityTemplate />} />
               <Route path="/management/activity-templates/:templateId/assign" element={<AssignActivity />} />
               
               {/* Material Templates */}
               <Route path="/management/material-templates/create" element={<CreateMaterialTemplate />} />
+              <Route path="/management/material-templates/edit/:id" element={<EditMaterialTemplate />} />
               <Route path="/management/material-templates/assign" element={<AssignMaterial />} />
               <Route path="/management/materials/assignment/:assignmentId" element={<MaterialAssignmentDetail />} />
               <Route path="/student/home" element={<StudentHome />} />

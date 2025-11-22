@@ -4,15 +4,17 @@ import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { addTeacherFormSchema, type AddTeacherFormSchema } from './const';
 import { Loader2 } from 'lucide-react';
 import { useFetch } from '@/hooks/useFetch';
 import { toast } from 'sonner';
+import { IAMContext } from '@/modules/IAM/context/context';
 
 export const AddTeacherButton = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useContext(IAMContext);
 
   const { fetch, error: hasAddTeacherError, loading: isAddTeacherLoading } = useFetch('/teacher');
 
@@ -54,6 +56,7 @@ export const AddTeacherButton = () => {
   return (
     <div>
       <div className="flex justify-center">
+        {user?.role === 'TEACHER' && user.manager ? (
         <Button className="
           bg-blue-800/80
           text-white
@@ -67,6 +70,7 @@ export const AddTeacherButton = () => {
           >
           Cadastrar professor
         </Button>
+        ) : <></>}
       </div>
       <Modal 
         title="Cadastrar professor" 

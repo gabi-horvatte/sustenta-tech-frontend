@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { DateTimePicker } from '@/components/ui/datetime-picker';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useFetch } from '@/hooks/useFetch';
@@ -35,7 +35,7 @@ export const AssignMaterial = () => {
   const templateIdFromUrl = searchParams.get('templateId');
   const [selectedTemplate, setSelectedTemplate] = useState(templateIdFromUrl || '');
   const [selectedClassroom, setSelectedClassroom] = useState('');
-  const [expiresAt, setExpiresAt] = useState('');
+  const [expiresAt, setExpiresAt] = useState<Date>();
 
   const { data: templates, loading: templatesLoading, fetch: fetchTemplates } = useFetch<MaterialTemplate[]>('/material-template');
   const { data: classrooms, loading: classroomsLoading, fetch: fetchClassrooms } = useFetch<Classroom[]>('/classroom');
@@ -66,8 +66,7 @@ export const AssignMaterial = () => {
       return;
     }
 
-    const expirationDate = new Date(expiresAt);
-    if (expirationDate <= new Date()) {
+    if (expiresAt <= new Date()) {
       toast.error('Data de expiração deve ser no futuro');
       return;
     }
@@ -84,7 +83,7 @@ export const AssignMaterial = () => {
           material_template_id: selectedTemplate,
           classroom_id: selectedClassroom,
           assigned_by: user.id,
-          expires_at: expirationDate.toISOString(),
+          expires_at: expiresAt.toISOString(),
         },
       });
 
@@ -139,6 +138,7 @@ export const AssignMaterial = () => {
                     variant="outline"
                     size="sm"
                     onClick={() => navigate('/management/material-templates/create')}
+                    className="cursor-pointer"
                   >
                     <Plus className="w-3 h-3 mr-1" />
                     Criar Modelo de Material
@@ -162,6 +162,7 @@ export const AssignMaterial = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => window.open(selectedTemplateData.url, '_blank')}
+                        className="cursor-pointer"
                       >
                         <ExternalLink className="w-3 h-3 mr-1" />
                         Visualizar
@@ -199,14 +200,11 @@ export const AssignMaterial = () => {
 
             <div>
               <Label htmlFor="expiresAt">Data e Hora de Expiração</Label>
-              <Input
-                id="expiresAt"
-                type="datetime-local"
-                value={expiresAt}
-                onChange={(e) => setExpiresAt(e.target.value)}
+              <DateTimePicker
+                date={expiresAt}
+                onDateChange={setExpiresAt}
+                min={new Date()}
                 className="mt-1"
-                required
-                min={new Date().toISOString().slice(0, 16)}
               />
               <p className="text-sm text-gray-500 mt-1">
                 Alunos podem acessar este material até esta data
@@ -220,10 +218,11 @@ export const AssignMaterial = () => {
             type="button"
             variant="outline"
             onClick={() => navigate('/management/materials')}
+            className="cursor-pointer"
           >
             Cancelar
           </Button>
-          <Button type="submit" disabled={assigning}>
+          <Button type="submit" disabled={assigning} className="cursor-pointer">
             {assigning ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />

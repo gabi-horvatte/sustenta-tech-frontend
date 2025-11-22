@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
 import { useNavigate } from 'react-router';
-import { Loader2, Plus, ExternalLink, FileText } from 'lucide-react';
+import { Loader2, Plus, ExternalLink, FileText, Edit } from 'lucide-react';
 
 type MaterialTemplate = {
   id: string;
@@ -52,7 +52,7 @@ export const MaterialTemplateLibrary = () => {
         </div>
         <Button 
           onClick={() => navigate('/management/material-templates/create')}
-          className="bg-lime-600 hover:bg-lime-700"
+          className="bg-lime-600 hover:bg-lime-700 cursor-pointer"
         >
           <Plus className="w-4 h-4 mr-2" />
           Criar Novo Modelo
@@ -67,6 +67,7 @@ export const MaterialTemplateLibrary = () => {
           <Button 
             onClick={() => navigate('/management/material-templates/create')}
             variant="outline"
+            className="cursor-pointer"
           >
             <Plus className="w-4 h-4 mr-2" />
             Criar Modelo de Material
@@ -108,15 +109,24 @@ export const MaterialTemplateLibrary = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => window.open(template.url, '_blank')}
-                      className="flex-1"
+                      className="flex-1 cursor-pointer"
                     >
                       <ExternalLink className="w-3 h-3 mr-1" />
                       Ver
                     </Button>
                     <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => navigate(`/management/material-templates/edit/${template.id}`)}
+                      className="flex-1 cursor-pointer"
+                    >
+                      <Edit className="w-3 h-3 mr-1" />
+                      Editar
+                    </Button>
+                    <Button
                       size="sm"
                       onClick={() => navigate(`/management/material-templates/assign?templateId=${template.id}`)}
-                      className="flex-1 bg-lime-600 hover:bg-lime-700"
+                      className="flex-1 bg-lime-600 hover:bg-lime-700 cursor-pointer"
                     >
                       Atribuir
                     </Button>

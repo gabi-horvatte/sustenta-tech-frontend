@@ -44,7 +44,7 @@ export const QuestionBuilder = ({ questions, onChange }: QuestionBuilderProps) =
     onChange(reorderedQuestions);
   };
 
-  const updateQuestion = (questionIndex: number, field: keyof Question, value: any) => {
+  const updateQuestion = (questionIndex: number, field: keyof Question, value: string | QuestionOption[]) => {
     const updatedQuestions = [...questions];
     updatedQuestions[questionIndex] = {
       ...updatedQuestions[questionIndex],
@@ -77,7 +77,7 @@ export const QuestionBuilder = ({ questions, onChange }: QuestionBuilderProps) =
     onChange(updatedQuestions);
   };
 
-  const updateOption = (questionIndex: number, optionIndex: number, field: keyof QuestionOption, value: any) => {
+  const updateOption = (questionIndex: number, optionIndex: number, field: keyof QuestionOption, value: string | number | boolean) => {
     const updatedQuestions = [...questions];
     const option = updatedQuestions[questionIndex].options[optionIndex];
     
@@ -87,7 +87,13 @@ export const QuestionBuilder = ({ questions, onChange }: QuestionBuilderProps) =
         opt.is_correct = idx === optionIndex;
       });
     } else {
-      (option as any)[field] = value;
+      if (field === 'option_text' && typeof value === 'string') {
+        option.option_text = value;
+      } else if (field === 'option_order' && typeof value === 'number') {
+        option.option_order = value;
+      } else if (field === 'is_correct' && typeof value === 'boolean') {
+        option.is_correct = value;
+      }
     }
     
     onChange(updatedQuestions);
@@ -97,7 +103,7 @@ export const QuestionBuilder = ({ questions, onChange }: QuestionBuilderProps) =
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">Questões</h3>
-        <Button onClick={addQuestion} variant="outline">
+        <Button type="button" onClick={addQuestion} variant="outline" className="cursor-pointer">
           <Plus className="w-4 h-4 mr-2" />
           Adicionar Questão
         </Button>
@@ -109,9 +115,11 @@ export const QuestionBuilder = ({ questions, onChange }: QuestionBuilderProps) =
             <div className="flex justify-between items-center">
               <CardTitle className="text-base">Questão {question.question_order}</CardTitle>
               <Button
+                type="button"
                 onClick={() => removeQuestion(questionIndex)}
                 variant="destructive"
                 size="sm"
+                className="cursor-pointer"
               >
                 <Trash2 className="w-4 h-4" />
               </Button>
@@ -133,13 +141,15 @@ export const QuestionBuilder = ({ questions, onChange }: QuestionBuilderProps) =
               <div className="flex justify-between items-center">
                 <Label>Opções de Resposta</Label>
                 <Button
+                  type="button"
                   onClick={() => addOption(questionIndex)}
                   variant="outline"
                   size="sm"
                   disabled={question.options.length >= 6}
+                  className="cursor-pointer"
                 >
                   <Plus className="w-3 h-3 mr-1" />
-                  Adicionar Opção
+                  Adicionar opção
                 </Button>
               </div>
 
@@ -159,10 +169,12 @@ export const QuestionBuilder = ({ questions, onChange }: QuestionBuilderProps) =
                     className="flex-1"
                   />
                   <Button
+                    type="button"
                     onClick={() => removeOption(questionIndex, optionIndex)}
                     variant="destructive"
                     size="sm"
                     disabled={question.options.length <= 2}
+                    className="cursor-pointer"
                   >
                     <Trash2 className="w-3 h-3" />
                   </Button>

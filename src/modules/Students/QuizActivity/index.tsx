@@ -199,7 +199,7 @@ export const QuizActivity = () => {
               {activity && <p>Template ID: {activity.activity_template_id}</p>}
             </div>
           )}
-          <Button onClick={() => navigate('/student/activities')} className="mt-4">
+          <Button onClick={() => navigate('/student/activities')} className="mt-4 cursor-pointer">
             Voltar às Atividades
           </Button>
         </div>
@@ -216,7 +216,7 @@ export const QuizActivity = () => {
           <Clock className="w-12 h-12 mx-auto mb-4 text-red-500" />
           <p className="text-red-600 text-lg">Esta atividade expirou</p>
           <p className="text-gray-600">Expirou em: {new Date(activity.expires_at).toLocaleString()}</p>
-          <Button onClick={() => navigate('/student/activities')} className="mt-4">
+          <Button onClick={() => navigate('/student/activities')} className="mt-4 cursor-pointer">
             Voltar às Atividades
           </Button>
         </div>
@@ -258,7 +258,7 @@ export const QuizActivity = () => {
               })}
             </div>
 
-            <Button onClick={() => navigate('/student/activities')} className="mt-6">
+            <Button onClick={() => navigate('/student/activities')} className="mt-6 cursor-pointer">
               Voltar às Atividades
             </Button>
           </CardContent>
@@ -273,7 +273,7 @@ export const QuizActivity = () => {
         <Button
           variant="ghost"
           onClick={() => navigate('/student/activities')}
-          className="mb-4"
+          className="mb-4 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Voltar às Atividades
@@ -337,6 +337,7 @@ export const QuizActivity = () => {
               variant="outline"
               onClick={handlePrevious}
               disabled={currentQuestionIndex === 0}
+              className="cursor-pointer"
             >
               Anterior
             </Button>
@@ -344,6 +345,7 @@ export const QuizActivity = () => {
             <Button
               onClick={handleNext}
               disabled={!selectedOption || submitting}
+              className="cursor-pointer"
             >
               {submitting ? (
                 <>

@@ -68,7 +68,7 @@ export const ClassroomStudents = ({ classroomId }: ClassroomStudentsProps) => {
           </div>
           <Button 
             onClick={() => setAddStudentOpen(true)}
-            className="bg-lime-600 hover:bg-lime-700 text-white"
+            className="bg-lime-600 hover:bg-lime-700 text-white cursor-pointer"
           >
             <Plus className="w-4 h-4 mr-2" />
             Adicionar Primeiro Aluno
@@ -96,7 +96,7 @@ export const ClassroomStudents = ({ classroomId }: ClassroomStudentsProps) => {
           </div>
           <Button 
             onClick={() => setAddStudentOpen(true)}
-            className="bg-lime-600 hover:bg-lime-700 text-white"
+            className="bg-lime-600 hover:bg-lime-700 text-white cursor-pointer"
           >
             <Plus className="w-4 h-4 mr-2" />
             Adicionar Aluno
@@ -109,7 +109,7 @@ export const ClassroomStudents = ({ classroomId }: ClassroomStudentsProps) => {
               key={student.id} 
               className="bg-lime-700/75 hover:bg-lime-700/85 transition-colors cursor-pointer" 
               onClick={() => navigate(
-                `/management/classroom/student/${student.id}?name=${student.name} ${student.last_name}&birth_date=${student.birth_date}&code=${student.code}&classroom_id=${classroomId}`
+                `/management/classroom/student/${student.id}?first_name=${student.name}&last_name=${student.last_name}&birth_date=${student.birth_date}&code=${student.code}&classroom_id=${classroomId}&email=${student.email}`
               )}
             >
               <CardHeader className="py-4 px-4">
@@ -117,7 +117,8 @@ export const ClassroomStudents = ({ classroomId }: ClassroomStudentsProps) => {
                   {student.name} {student.last_name}
                 </CardTitle>
                 <CardDescription className="text-white/90 text-sm">
-                  {formatDateString(student.birth_date)} • {student.code}
+                  <p>{student.email}</p>
+                  <p>{formatDateString(student.birth_date)} • {student.code}</p>
                 </CardDescription>
               </CardHeader>
             </Card>

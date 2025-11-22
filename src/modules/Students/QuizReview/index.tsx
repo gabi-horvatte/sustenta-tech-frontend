@@ -90,7 +90,7 @@ export const QuizReview = () => {
           <Button 
             variant="outline" 
             onClick={() => navigate(-1)}
-            className="mt-4"
+            className="mt-4 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Voltar
@@ -109,7 +109,7 @@ export const QuizReview = () => {
         <Button 
           variant="outline" 
           onClick={() => navigate(-1)}
-          className="mb-4"
+          className="mb-4 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Voltar
@@ -263,6 +263,7 @@ export const QuizReview = () => {
         <Button 
           variant="outline" 
           onClick={() => navigate(-1)}
+          className="cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Voltar

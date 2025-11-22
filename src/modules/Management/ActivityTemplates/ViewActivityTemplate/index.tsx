@@ -56,8 +56,8 @@ export const ViewActivityTemplate = () => {
       <div className="max-w-4xl mx-auto p-6">
         <div className="text-center py-12">
           <p className="text-red-600">Template not found</p>
-          <Button onClick={() => navigate('/management/activity-templates')} className="mt-4">
-            Back to Templates
+          <Button onClick={() => navigate('/management/activity-templates')} className="mt-4 cursor-pointer">
+            Voltar aos Modelos
           </Button>
         </div>
       </div>
@@ -70,10 +70,10 @@ export const ViewActivityTemplate = () => {
         <Button
           variant="ghost"
           onClick={() => navigate('/management/activity-templates')}
-          className="mb-4"
+          className="mb-4 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Templates
+          Voltar aos Modelos
         </Button>
         <div className="flex justify-between items-start">
           <div>
@@ -85,10 +85,10 @@ export const ViewActivityTemplate = () => {
           </div>
           <Button
             onClick={() => navigate(`/management/activity-templates/${template.id}/assign?name=${encodeURIComponent(template.name)}`)}
-            className="bg-lime-600 hover:bg-lime-700"
+            className="bg-lime-600 hover:bg-lime-700 cursor-pointer"
           >
             <Users className="w-4 h-4 mr-2" />
-            Assign to Classroom
+            Atribuir para Turma
           </Button>
         </div>
       </div>
@@ -96,7 +96,7 @@ export const ViewActivityTemplate = () => {
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Questions ({template.questions.length})</CardTitle>
+            <CardTitle>Questões ({template.questions.length})</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {template.questions
@@ -105,12 +105,12 @@ export const ViewActivityTemplate = () => {
                 <Card key={question.id} className="border-2">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-base">
-                      Question {question.question_order}: {question.question_text}
+                      Questão {question.question_order}: {question.question_text}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2">
-                      <p className="text-sm font-medium text-gray-700">Answer Options:</p>
+                      <p className="text-sm font-medium text-gray-700">Opções de Resposta:</p>
                       {question.options
                         .sort((a, b) => a.option_order - b.option_order)
                         .map((option) => (
@@ -134,7 +134,7 @@ export const ViewActivityTemplate = () => {
                             </span>
                             {option.is_correct && (
                               <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
-                                Correct Answer
+                                Resposta Correta
                               </span>
                             )}
                           </div>

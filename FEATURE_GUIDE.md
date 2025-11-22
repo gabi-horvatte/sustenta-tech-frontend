@@ -474,3 +474,4 @@ O **SustentaTech** é uma plataforma educacional completa que oferece diferentes
 ---
 
 *Este guia apresenta todas as funcionalidades disponíveis na plataforma SustentaTech. Para suporte técnico ou dúvidas específicas, entre em contato com a equipe de desenvolvimento.*
+

@@ -71,7 +71,7 @@ export const ClassroomActivities = ({ classroomId, classroomName }: ClassroomAct
           </div>
           <Button 
             onClick={() => setAssignModalOpen(true)}
-            className="bg-lime-600 hover:bg-lime-700 text-white"
+            className="bg-lime-600 hover:bg-lime-700 text-white cursor-pointer"
           >
             <Plus className="w-4 h-4 mr-2" />
             Atribuir Primeira Atividade
@@ -100,7 +100,7 @@ export const ClassroomActivities = ({ classroomId, classroomName }: ClassroomAct
           </div>
           <Button 
             onClick={() => setAssignModalOpen(true)}
-            className="bg-lime-600 hover:bg-lime-700 text-white"
+            className="bg-lime-600 hover:bg-lime-700 text-white cursor-pointer"
           >
             <Plus className="w-4 h-4 mr-2" />
             Atribuir Atividade

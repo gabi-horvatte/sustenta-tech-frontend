@@ -56,7 +56,7 @@ export const MaterialAssignmentDetail = () => {
           <Button 
             variant="outline" 
             onClick={() => navigate('/management/materials')}
-            className="mt-4"
+            className="mt-4 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Voltar aos Materiais
@@ -76,7 +76,7 @@ export const MaterialAssignmentDetail = () => {
         <Button 
           variant="outline" 
           onClick={() => navigate('/management/materials')}
-          className="mb-4"
+          className="mb-4 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Voltar aos Materiais
@@ -99,6 +99,7 @@ export const MaterialAssignmentDetail = () => {
               variant="outline"
               size="sm"
               onClick={() => window.open(assignmentDetail.url, '_blank')}
+              className="cursor-pointer"
             >
               <ExternalLink className="w-4 h-4 mr-2" />
               Abrir Material

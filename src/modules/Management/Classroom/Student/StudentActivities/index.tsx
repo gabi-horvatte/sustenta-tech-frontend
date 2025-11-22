@@ -33,7 +33,7 @@ export const StudentActivities = () => {
   }, [fetchActivities]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 pb-4">
       <h2 className="text-3xl font-bold text-yellow-900/80 text-center">Atividades</h2>
       {activitiesData?.length ? (
         <div className="grid grid-cols-3 gap-4">

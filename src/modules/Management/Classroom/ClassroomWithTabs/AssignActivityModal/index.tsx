@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { DateTimePicker } from '@/components/ui/datetime-picker';
 import { Textarea } from '@/components/ui/textarea';
 import { useFetch } from '@/hooks/useFetch';
 import { Loader2, BookOpen, Calendar } from 'lucide-react';
@@ -36,7 +37,7 @@ export const AssignActivityModal = ({
   const [selectedTemplate, setSelectedTemplate] = useState<ActivityTemplate | null>(null);
   const [activityName, setActivityName] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
-  const [expiresAt, setExpiresAt] = useState('');
+  const [expiresAt, setExpiresAt] = useState<Date>();
 
   const { data: templates, loading: templatesLoading, fetch: fetchTemplates } = useFetch<ActivityTemplate[]>('/activity-template');
   const { fetch: createActivity, loading: createLoading } = useFetch('/activity');
@@ -68,7 +69,7 @@ export const AssignActivityModal = ({
           description: activityDescription,
           classroom_id: classroomId,
           activity_template_id: selectedTemplate.id,
-          expires_at: new Date(expiresAt).toISOString(),
+          expires_at: expiresAt.toISOString(),
         },
       });
 
@@ -173,13 +174,11 @@ export const AssignActivityModal = ({
 
             <div>
               <Label htmlFor="expires-at">Data de Expiração *</Label>
-              <Input
-                id="expires-at"
-                type="datetime-local"
-                value={expiresAt}
-                onChange={(e) => setExpiresAt(e.target.value)}
+              <DateTimePicker
+                date={expiresAt}
+                onDateChange={setExpiresAt}
+                min={new Date()}
                 className="mt-1"
-                min={new Date().toISOString().slice(0, 16)}
               />
             </div>
           </div>
@@ -187,13 +186,13 @@ export const AssignActivityModal = ({
 
         {/* Actions */}
         <div className="flex justify-end space-x-3 border-t pt-6">
-          <Button variant="outline" onClick={handleClose}>
+          <Button variant="outline" onClick={handleClose} className="cursor-pointer">
             Cancelar
           </Button>
           <Button
             onClick={handleSubmit}
             disabled={!selectedTemplate || !activityName || !activityDescription || !expiresAt || createLoading}
-            className="bg-lime-600 hover:bg-lime-700"
+            className="bg-lime-600 hover:bg-lime-700 cursor-pointer"
           >
             {createLoading ? (
               <>
@@ -212,3 +211,4 @@ export const AssignActivityModal = ({
     </Modal>
   );
 };
+

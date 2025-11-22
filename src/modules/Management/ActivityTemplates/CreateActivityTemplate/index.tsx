@@ -142,10 +142,11 @@ export const CreateActivityTemplate = () => {
             type="button"
             variant="outline"
             onClick={() => navigate('/management/activity-templates')}
+            className="cursor-pointer"
           >
             Cancelar
           </Button>
-          <Button type="submit" disabled={creating}>
+          <Button type="submit" disabled={creating} className="cursor-pointer">
             {creating ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />

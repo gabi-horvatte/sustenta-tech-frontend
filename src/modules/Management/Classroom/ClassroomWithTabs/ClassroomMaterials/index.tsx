@@ -54,7 +54,7 @@ export const ClassroomMaterials = ({ classroomId }: { classroomId: string }) => 
           <p className="text-sm mb-4">Esta turma ainda não possui materiais atribuídos</p>
           <Button 
             onClick={() => setAssignModalOpen(true)}
-            className="bg-lime-600 hover:bg-lime-700 text-white"
+            className="bg-lime-600 hover:bg-lime-700 text-white cursor-pointer"
           >
             <Plus className="w-4 h-4 mr-2" />
             Atribuir Primeiro Material
@@ -83,7 +83,7 @@ export const ClassroomMaterials = ({ classroomId }: { classroomId: string }) => 
           </div>
           <Button 
             onClick={() => setAssignModalOpen(true)}
-            className="bg-lime-600 hover:bg-lime-700 text-white"
+            className="bg-lime-600 hover:bg-lime-700 text-white cursor-pointer"
           >
             <Plus className="w-4 h-4 mr-2" />
             Atribuir Material

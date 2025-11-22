@@ -55,7 +55,7 @@ export const Activity = () => {
         <Button 
           variant="outline" 
           onClick={() => navigate('/management/activities')}
-          className="self-start"
+          className="self-start cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Voltar às Atividades
@@ -75,7 +75,7 @@ export const Activity = () => {
                 console.error('Activity template ID not found');
               }
             }}
-            className="bg-lime-600 hover:bg-lime-700"
+            className="bg-lime-600 hover:bg-lime-700 cursor-pointer"
             disabled={activityDetailsLoading || !activityDetails?.activity_template_id}
           >
             <FileText className="w-4 h-4 mr-2" />

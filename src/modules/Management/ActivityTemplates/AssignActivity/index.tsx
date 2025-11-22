@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { DateTimePicker } from '@/components/ui/datetime-picker';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useFetch } from '@/hooks/useFetch';
@@ -41,7 +42,7 @@ export const AssignActivity = () => {
   const [selectedClassroom, setSelectedClassroom] = useState('');
   const [activityName, setActivityName] = useState(templateName);
   const [activityDescription, setActivityDescription] = useState('');
-  const [expiresAt, setExpiresAt] = useState('');
+  const [expiresAt, setExpiresAt] = useState<Date>();
 
   const { data: classrooms, loading: classroomsLoading, fetch: fetchClassrooms } = useFetch<Classroom[]>('/classroom');
   const { data: template, loading: templateLoading, fetch: fetchTemplate } = useFetch<ActivityTemplate>(`/activity-template/${templateId}`);
@@ -83,8 +84,7 @@ export const AssignActivity = () => {
       return;
     }
 
-    const expirationDate = new Date(expiresAt);
-    if (expirationDate <= new Date()) {
+    if (expiresAt <= new Date()) {
       toast.error('Data de expiração deve ser no futuro');
       return;
     }
@@ -102,7 +102,7 @@ export const AssignActivity = () => {
           description: activityDescription.trim(),
           classroom_id: selectedClassroom,
           teacher_id: user.id,
-          expires_at: expirationDate.toISOString(),
+          expires_at: expiresAt.toISOString(),
           activity_template_id: templateId,
         },
       });
@@ -128,7 +128,7 @@ export const AssignActivity = () => {
       <div className="max-w-2xl mx-auto p-6">
         <div className="text-center py-12">
           <p className="text-red-600">Modelo não encontrado</p>
-          <Button onClick={() => navigate('/management/activity-templates')} className="mt-4">
+          <Button onClick={() => navigate('/management/activity-templates')} className="cursor-pointer mt-4">
             Voltar aos Modelos
           </Button>
         </div>
@@ -142,7 +142,7 @@ export const AssignActivity = () => {
         <Button
           variant="ghost"
           onClick={() => navigate('/management/activity-templates')}
-          className="mb-4"
+          className="mb-4 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Voltar aos Modelos
@@ -219,14 +219,11 @@ export const AssignActivity = () => {
 
               <div>
                 <Label htmlFor="expiresAt">Data e Hora de Expiração</Label>
-                <Input
-                  id="expiresAt"
-                  type="datetime-local"
-                  value={expiresAt}
-                  onChange={(e) => setExpiresAt(e.target.value)}
+                <DateTimePicker
+                  date={expiresAt}
+                  onDateChange={setExpiresAt}
+                  min={new Date()}
                   className="mt-1"
-                  required
-                  min={new Date().toISOString().slice(0, 16)}
                 />
               </div>
             </CardContent>
@@ -237,10 +234,11 @@ export const AssignActivity = () => {
               type="button"
               variant="outline"
               onClick={() => navigate('/management/activity-templates')}
+              className="cursor-pointer"
             >
               Cancelar
             </Button>
-            <Button type="submit" disabled={creating}>
+            <Button type="submit" disabled={creating} className="cursor-pointer">
               {creating ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />

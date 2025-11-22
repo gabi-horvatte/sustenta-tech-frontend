@@ -43,7 +43,7 @@ export const Classroom = () => {
       {studentsData?.length ? (
         <div className="grid grid-cols-3 gap-4">
           {studentsData?.map((student) => (
-            <Card key={student.id} className="bg-lime-700/75 flex flex-col p-0 m-0 cursor-pointer" onClick={() => navigate(`/management/classroom/student/${student.id}?name=${student.name} ${student.last_name}&birth_date=${student.birth_date}&code=${student.code}&classroom_id=${classroomId}`)}>
+            <Card key={student.id} className="bg-lime-700/75 flex flex-col p-0 m-0 cursor-pointer" onClick={() => navigate(`/management/classroom/student/${student.id}?first_name=${student.name}&last_name=${student.last_name}&birth_date=${student.birth_date}&code=${student.code}&classroom_id=${classroomId}`)}>
               <CardHeader className="flex flex-col gap-1 items-start py-2 px-3">
                 <CardTitle className="text-lg font-bold text-white">{student.name} {student.last_name}</CardTitle>
                 <CardDescription className="text-white text-sm">{formatDateString(student.birth_date)} - {student.code}</CardDescription>
