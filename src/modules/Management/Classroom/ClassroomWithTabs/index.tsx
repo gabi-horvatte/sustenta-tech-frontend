@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ClassroomStudents } from './ClassroomStudents';
 import { ClassroomActivities } from './ClassroomActivities';
 import { ClassroomMaterials } from './ClassroomMaterials';
-import { ClassroomReports } from './ClassroomReports';
+// import { ClassroomReports } from './ClassroomReports';
 
 export const ClassroomWithTabs = () => {
   const { classroomId } = useParams();
@@ -21,9 +21,10 @@ export const ClassroomWithTabs = () => {
         </p>
       </div>
 
-      <Tabs defaultValue="reports" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="reports">Relatórios</TabsTrigger>
+      <Tabs defaultValue="students" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+        {/* <TabsList className="grid w-full grid-cols-4"> */}
+          {/* <TabsTrigger value="reports">Relatórios</TabsTrigger> */}
           <TabsTrigger value="students">Alunos</TabsTrigger>
           <TabsTrigger value="activities">Atividades</TabsTrigger>
           <TabsTrigger value="materials">Materiais</TabsTrigger>
@@ -40,9 +41,9 @@ export const ClassroomWithTabs = () => {
         <TabsContent value="materials" className="mt-6">
           {classroomId && <ClassroomMaterials classroomId={classroomId} />}
         </TabsContent>
-        <TabsContent value="reports" className="mt-6">
+        {/* <TabsContent value="reports" className="mt-6">
           {classroomId && <ClassroomReports classroomId={classroomId} />}
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
     </div>
   );

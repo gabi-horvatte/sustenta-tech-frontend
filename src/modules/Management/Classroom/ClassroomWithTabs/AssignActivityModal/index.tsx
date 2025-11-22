@@ -87,7 +87,7 @@ export const AssignActivityModal = ({
     setSelectedTemplate(null);
     setActivityName('');
     setActivityDescription('');
-    setExpiresAt('');
+    setExpiresAt(undefined);
   };
 
   const handleClose = () => {

@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { MaterialTemplateLibrary } from './MaterialTemplateLibrary';
 import { AssignedMaterials } from './AssignedMaterials';
-import { MaterialReports } from './MaterialReports';
+// import { MaterialReports } from './MaterialReports';
 
 export const MaterialsWithTabs = () => {
   return (
@@ -13,9 +13,10 @@ export const MaterialsWithTabs = () => {
         </p>
       </div>
 
-      <Tabs defaultValue="reports" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="reports">Relatórios</TabsTrigger>
+      <Tabs defaultValue="assigned" className="w-full">
+        {/* <TabsList className="grid w-full grid-cols-3"> */}
+        <TabsList className="grid w-full grid-cols-2">
+          {/* <TabsTrigger value="reports">Relatórios</TabsTrigger> */}
           <TabsTrigger value="assigned">Materiais Atribuídos</TabsTrigger>
           <TabsTrigger value="templates">Modelos de Material</TabsTrigger>
         </TabsList>
@@ -26,9 +27,9 @@ export const MaterialsWithTabs = () => {
         <TabsContent value="assigned" className="mt-6">
           <AssignedMaterials />
         </TabsContent>
-        <TabsContent value="reports" className="mt-6">
+        {/* <TabsContent value="reports" className="mt-6">
           <MaterialReports />
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
     </div>
   );

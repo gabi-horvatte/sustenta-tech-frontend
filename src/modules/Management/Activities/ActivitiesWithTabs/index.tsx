@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ActivityTemplateLibrary } from '@/modules/Management/ActivityTemplates/ActivityTemplateLibrary';
 import { AssignedActivities } from './AssignedActivities';
-import { ActivityReports } from './ActivityReports';
+// import { ActivityReports } from './ActivityReports';
 
 export const ActivitiesWithTabs = () => {
   return (
@@ -13,9 +13,10 @@ export const ActivitiesWithTabs = () => {
         </p>
       </div>
 
-      <Tabs defaultValue="reports" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="reports">Relatórios</TabsTrigger>
+      <Tabs defaultValue="assigned" className="w-full">
+        {/* <TabsList className="grid w-full grid-cols-3"> */}
+        <TabsList className="grid w-full grid-cols-2">
+          {/* <TabsTrigger value="reports">Relatórios</TabsTrigger> */}
           <TabsTrigger value="assigned">Atividades Atribuídas</TabsTrigger>
           <TabsTrigger value="templates">Modelos de Atividade</TabsTrigger>
         </TabsList>
@@ -27,9 +28,9 @@ export const ActivitiesWithTabs = () => {
         <TabsContent value="assigned" className="mt-6">
           <AssignedActivities />
         </TabsContent>
-        <TabsContent value="reports" className="mt-6">
+        {/* <TabsContent value="reports" className="mt-6">
           <ActivityReports />
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
     </div>
   );
