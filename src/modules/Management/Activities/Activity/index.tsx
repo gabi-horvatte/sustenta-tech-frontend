@@ -23,6 +23,12 @@ export const Activity = () => {
     students: {
       student_id: string;
       student_name: string;
+      student_first_name: string;
+      student_last_name: string;
+      student_birth_date: string;
+      student_code: string;
+      student_email: string;
+      student_classroom_id: string;
       completed_at: string | null;
       total_questions: number;
       correct_answers: number;
@@ -148,7 +154,7 @@ export const Activity = () => {
                           navigate(reviewUrl);
                         } else {
                           // Navigate to student profile if not completed
-                          const profileUrl = `/management/classroom/student/${student.student_id}`;
+                          const profileUrl = `/management/classroom/student/${student.student_id}?first_name=${student.student_first_name}&last_name=${student.student_last_name}&birth_date=${student.student_birth_date}&code=${student.student_code}&classroom_id=${student.student_classroom_id}&email=${student.student_email}`;
                           console.log('Navigating to profile:', profileUrl);
                           navigate(profileUrl);
                         }
