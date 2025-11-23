@@ -131,7 +131,7 @@ export const EditActivityTemplate = () => {
       });
 
       toast.success('Modelo de atividade atualizado com sucesso!');
-      navigate('/management/activity-templates');
+      navigate('/management/activities');
     } catch (error) {
       console.error('Error updating activity template:', error);
       toast.error('Falha ao atualizar modelo de atividade. Tente novamente.');
@@ -151,7 +151,7 @@ export const EditActivityTemplate = () => {
       <div className="max-w-4xl mx-auto p-6">
         <div className="text-center py-12">
           <p className="text-red-600">Template not found</p>
-          <Button onClick={() => navigate('/management/activity-templates')} className="mt-4 cursor-pointer">
+          <Button onClick={() => navigate('/management/activities')} className="mt-4 cursor-pointer">
             Voltar aos Modelos
           </Button>
         </div>
@@ -213,7 +213,7 @@ export const EditActivityTemplate = () => {
           <Button
             type="button"
             variant="outline"
-            onClick={() => navigate('/management/activity-templates')}
+            onClick={() => navigate('/management/activities')}
             className="cursor-pointer"
           >
             Cancelar

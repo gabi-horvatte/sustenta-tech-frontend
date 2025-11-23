@@ -5,6 +5,7 @@ import { CheckCircle, Clock, Link, Loader2 } from 'lucide-react';
 import { useEffect, useState, useContext } from 'react';
 import { toast } from 'sonner';
 import { IAMContext } from '@/modules/IAM/context/context';
+import { formatDateTimeString } from '@/utils';
 
 export const Material = ({
   materialAssignment
@@ -98,9 +99,9 @@ export const Material = ({
                materialAssignment.type === 'presentation' ? 'Apresentação' :
                materialAssignment.type === 'interactive' ? 'Interativo' :
                'Outro'}
-            </span>
+            </span> 
             <span className="text-xs">
-              Expira: {new Date(materialAssignment.expires_at).toLocaleDateString()}
+              Expira: {formatDateTimeString(materialAssignment.expires_at)}
             </span>
           </div>
         </div>

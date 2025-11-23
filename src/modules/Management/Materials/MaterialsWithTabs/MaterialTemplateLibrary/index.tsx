@@ -126,7 +126,7 @@ export const MaterialTemplateLibrary = () => {
                   <div className="text-xs text-gray-500">
                     Criado: {new Date(template.created_at).toLocaleDateString()}
                   </div>
-                  <div className="flex space-x-2">
+                  <div className="grid grid-cols-2 gap-2">
                     <Button
                       variant="outline"
                       size="sm"

@@ -56,7 +56,7 @@ export const ViewActivityTemplate = () => {
       <div className="max-w-4xl mx-auto p-6">
         <div className="text-center py-12">
           <p className="text-red-600">Template not found</p>
-          <Button onClick={() => navigate('/management/activity-templates')} className="mt-4 cursor-pointer">
+          <Button onClick={() => navigate('/management/activities')} className="mt-4 cursor-pointer">
             Voltar aos Modelos
           </Button>
         </div>
@@ -69,7 +69,7 @@ export const ViewActivityTemplate = () => {
       <div className="mb-6">
         <Button
           variant="ghost"
-          onClick={() => navigate('/management/activity-templates')}
+          onClick={() => navigate('/management/activities')}
           className="mb-4 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />

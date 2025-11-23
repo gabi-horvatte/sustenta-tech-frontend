@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { formatDateTimeString } from '@/utils';
 import { CheckCircle, Clock, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
@@ -29,7 +30,10 @@ export const Activity = ({
         </CardTitle>
         {activity.completed_at ? <CheckCircle className="w-4 h-4 text-lime-700/80" /> : new Date(activity.expires_at) > new Date() ? <Clock className="w-4 h-4 text-yellow-700/80" /> : <Clock className="w-4 h-4 text-red-700/80" />}
       </div>
-      <CardDescription>{activity.description}</CardDescription>
+      <CardDescription>
+        <p>Descrição: {activity.description}</p>
+        <p>Expiração: {formatDateTimeString(activity.expires_at)}</p>
+      </CardDescription>
       
       {/* Quiz-based activity */}
       <Button

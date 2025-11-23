@@ -17,7 +17,7 @@ import { MaterialsWithTabs } from '@/modules/Management/Materials/MaterialsWithT
 import { StudentHome } from '@/modules/Students/Home';
 import { Account } from '@/modules/IAM/Account';
 import { StudentActivities } from '@/modules/Students/StudentActivities';
-import { StudentMaterials } from '@/modules/Students/Materials';
+// import { StudentMaterials } from '@/modules/Students/Materials';
 import { StudentMaterials as NewStudentMaterials } from '@/modules/Students/StudentMaterials';
 import { QuizActivity } from '@/modules/Students/QuizActivity';
 import { QuizReview } from '@/modules/Students/QuizReview';
@@ -93,7 +93,7 @@ export const AppRouter = () => {
               <Route path="/student/home" element={<StudentHome />} />
               <Route path="/student" element={<StudentHome />} />
               <Route path="/student/activities" element={<StudentActivities />} />
-              <Route path="/student/materials" element={<NewStudentMaterials />} />
+              <Route path="/students/materials" element={<NewStudentMaterials />} />
               <Route path="/student/quiz/:activityId" element={<QuizActivity />} />
               <Route path="/student/quiz/:activityId/review" element={<QuizReview />} />
               
@@ -102,7 +102,7 @@ export const AppRouter = () => {
               
               {/* Legacy routes for backward compatibility */}
               <Route path="/students/activities" element={<StudentActivities />} />
-              <Route path="/students/materials" element={<StudentMaterials />} />
+              {/* <Route path="/students/materials" element={<StudentMaterials />} /> */}
               <Route path="/account" element={<Account />} />
             </Route>
             <Route path="/login" element={<LoginLayout />} />

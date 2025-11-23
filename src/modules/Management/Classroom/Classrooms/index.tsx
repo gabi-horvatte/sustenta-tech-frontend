@@ -73,7 +73,7 @@ export const Classrooms = () => {
             {classroomsData?.map((classroom) => (
               <Card
                 key={classroom.id}
-                className="bg-lime-700/50 flex flex-col p-0 m-0 transition-all duration-300 hover:bg-lime-700/60 cursor-pointer rounded-b-md"
+                className="grid-rows-2 grid bg-lime-700/50 flex flex-col p-0 m-0 transition-all duration-300 hover:bg-lime-700/60 cursor-pointer rounded-b-md"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -86,7 +86,7 @@ export const Classrooms = () => {
                   <CardTitle className="text-lg font-bold text-white text-center">{classroom.name}</CardTitle>
                   <CardDescription className="text-white text-center">{classroom.description}</CardDescription>
                 </CardHeader>
-                <CardFooter className="p-0 m-0 rounded-b-md">
+                <CardFooter className="items-end h-full p-0 m-0 rounded-b-md shadow-none">
                   <AddStudentButton setOpen={setAddStudentOpen} setClassroomId={setClassroomId} classroomId={classroom.id} />
                   {/* <Button 
                 className="bg-red-700/80 text-white border-none rounded-none hover:bg-red-800/100 cursor-pointer"
