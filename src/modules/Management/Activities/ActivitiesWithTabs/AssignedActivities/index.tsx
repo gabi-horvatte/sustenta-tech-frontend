@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
 import { useNavigate } from 'react-router';
-import { Loader2, Users, Calendar, CheckCircle, Clock } from 'lucide-react';
+import { Loader2, Users, Calendar, CheckCircle, Clock, Trash2 } from 'lucide-react';
 import { IAMContext } from '@/modules/IAM/context/context';
 
 type Activity = {
@@ -32,6 +32,7 @@ export const AssignedActivities = () => {
 
   const { data: activitiesData, loading: activitiesLoading, fetch: fetchActivities } = useFetch<Activity[]>('/activity');
   const { data: classroomsData, fetch: fetchClassrooms } = useFetch<Classroom[]>('/classroom');
+  const { fetch: deleteActivity, loading: deletingActivity } = useFetch('/activity');
 
   useEffect(() => {
     if (user?.id) {
@@ -39,6 +40,27 @@ export const AssignedActivities = () => {
       fetchClassrooms({ name: 'GET' });
     }
   }, [fetchActivities, fetchClassrooms, user?.id]);
+
+  const handleDeleteActivity = async (activityId: string, activityName: string, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click
+
+    if (!window.confirm(`Tem certeza que deseja excluir a atividade "${activityName}"? Esta ação não pode ser desfeita.`)) {
+      return;
+    }
+
+    try {
+      await deleteActivity({
+        name: 'DELETE',
+        id: activityId,
+      });
+
+      // Refresh the activities
+      fetchActivities({ name: 'GET' });
+    } catch (error) {
+      console.error('Error deleting activity:', error);
+      alert('Erro ao excluir atividade. Tente novamente.');
+    }
+  };
 
   useEffect(() => {
     if (activitiesData && classroomsData) {
@@ -137,20 +159,30 @@ export const AssignedActivities = () => {
                             Expira: {new Date(activity.expires_at).toLocaleDateString()}
                           </span>
                         </div>
-                        
+
                         <div className="flex items-center space-x-2">
                           <Clock className="w-3 h-3" />
                           <span>
                             Criado: {new Date(activity.created_at).toLocaleDateString()}
                           </span>
                         </div>
-                        
-                        <div className={`text-xs px-2 py-1 rounded-full inline-block ${
-                          isExpired 
-                            ? 'bg-red-100 text-red-800' 
-                            : 'bg-green-100 text-green-800'
-                        }`}>
-                          {isExpired ? 'Expirada' : 'Ativa'}
+
+                        <div className="flex justify-between items-center">
+                          <div className={`text-xs px-2 py-1 rounded-full inline-block ${
+                            isExpired
+                              ? 'bg-red-100 text-red-800'
+                              : 'bg-green-100 text-green-800'
+                          }`}>
+                            {isExpired ? 'Expirada' : 'Ativa'}
+                          </div>
+                          <button
+                            onClick={(e) => handleDeleteActivity(activity.id, activity.name, e)}
+                            disabled={deletingActivity}
+                            className="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-50 transition-colors disabled:opacity-50"
+                            title="Excluir atividade"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
                         </div>
                       </div>
                     </CardContent>

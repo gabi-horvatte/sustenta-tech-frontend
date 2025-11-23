@@ -60,7 +60,7 @@ export const Classrooms = () => {
     <>
       <div className="max-w-[40vw] mx-auto flex flex-col gap-8 pt-8 pb-0">
         <div className="flex flex-col gap-2">
-          <h1 className="text-5xl font-bold text-center text-lime-700/80">Painel administrativo</h1>
+          <h1 className="text-5xl font-bold text-center text-lime-700/80">Painel do professor</h1>
           <h5 className="text-xl font-bold text-center text-yellow-900/80">Turmas</h5>
         </div>
         <Card className="p-0 overflow-hidden max-h-[50vh]">

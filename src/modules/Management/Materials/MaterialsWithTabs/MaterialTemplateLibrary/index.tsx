@@ -3,7 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
 import { useNavigate } from 'react-router';
-import { Loader2, Plus, ExternalLink, FileText, Edit } from 'lucide-react';
+import { Loader2, Plus, ExternalLink, FileText, Edit, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 type MaterialTemplate = {
   id: string;
@@ -20,10 +21,31 @@ type MaterialTemplate = {
 export const MaterialTemplateLibrary = () => {
   const navigate = useNavigate();
   const { data: templates, loading, error, fetch: fetchTemplates } = useFetch<MaterialTemplate[]>('/material-template');
+  const { fetch: deleteTemplate, loading: deleting } = useFetch('/material-template');
 
   useEffect(() => {
     fetchTemplates({ name: 'GET' });
   }, [fetchTemplates]);
+
+  const handleDeleteTemplate = async (templateId: string, templateName: string) => {
+    if (!window.confirm(`Tem certeza que deseja excluir o modelo "${templateName}"? Esta ação não pode ser desfeita.`)) {
+      return;
+    }
+
+    try {
+      await deleteTemplate({
+        name: 'DELETE',
+        id: templateId,
+      });
+
+      // Refresh the list
+      fetchTemplates({ name: 'GET' });
+      toast.success(`Modelo "${templateName}" excluído com sucesso!`);
+    } catch (error) {
+      console.error('Error deleting template:', error);
+      alert('Erro ao excluir modelo. Tente novamente.');
+    }
+  };
 
   if (loading) {
     return (
@@ -129,6 +151,16 @@ export const MaterialTemplateLibrary = () => {
                       className="flex-1 bg-lime-600 hover:bg-lime-700 cursor-pointer"
                     >
                       Atribuir
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleDeleteTemplate(template.id, template.name)}
+                      disabled={deleting}
+                      className="text-red-600 border-red-600 hover:bg-red-50 cursor-pointer"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      Excluir
                     </Button>
                   </div>
                 </div>

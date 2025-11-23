@@ -3,11 +3,11 @@ import { materialsContent } from '@/materials';
 
 export const Materials = () => {
   return (
-    <div className="max-w-[40vw] mx-auto flex flex-col gap-8 pt-8 pb-0">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-5xl font-bold text-center text-lime-700/80">Painel administrativo</h1>
+    <div className="flex flex-col gap-8">
+      {/* <div className="flex flex-col gap-2">
+        <h1 className="text-5xl font-bold text-center text-lime-700/80">Painel do professor</h1>
         <h5 className="text-xl font-bold text-center text-yellow-900/80">Materiais</h5>
-      </div>
+      </div> */}
       {(materialsContent?.length ?? 0) > 0 ? (
         <div className="grid grid-cols-3 gap-2">
           {materialsContent?.map((material) => (

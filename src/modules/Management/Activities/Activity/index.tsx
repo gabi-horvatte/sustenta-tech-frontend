@@ -3,7 +3,7 @@ import { formatDateTimeString } from '@/utils';
 import { useEffect } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router';
 import { Button } from '@/components/ui/button';
-import { FileText, ArrowLeft } from 'lucide-react';
+import { FileText, ArrowLeft, Trash2 } from 'lucide-react';
 
 export const Activity = () => {
   const { activityId } = useParams();
@@ -40,6 +40,8 @@ export const Activity = () => {
     expires_at: string;
   }>(`/activity/${activityId}`);
 
+  const { fetch: deleteActivity, loading: deletingActivity } = useFetch('/activity');
+
   useEffect(() => {
     fetchActivity({
       name: 'GET',
@@ -48,6 +50,24 @@ export const Activity = () => {
       name: 'GET',
     });
   }, [fetchActivity, fetchActivityDetails]);
+
+  const handleDeleteActivity = async () => {
+    if (!window.confirm(`Tem certeza que deseja excluir a atividade "${name}"? Esta ação não pode ser desfeita.`)) {
+      return;
+    }
+
+    try {
+      await deleteActivity({
+        name: 'DELETE',
+        id: activityId!,
+      });
+
+      navigate('/management/activities');
+    } catch (error) {
+      console.error('Error deleting activity:', error);
+      alert('Erro ao excluir atividade. Tente novamente.');
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto flex flex-col gap-8 pt-8 pb-0 px-4">
@@ -66,8 +86,8 @@ export const Activity = () => {
           <h5 className="text-xl font-bold text-center text-yellow-900/80">{description}</h5>
         </div>
         
-        <div className="flex justify-center">
-          <Button 
+        <div className="flex justify-center gap-4">
+          <Button
             onClick={() => {
               if (activityDetails?.activity_template_id) {
                 navigate(`/management/activity-templates/${activityDetails.activity_template_id}`);
@@ -80,6 +100,15 @@ export const Activity = () => {
           >
             <FileText className="w-4 h-4 mr-2" />
             Ver Questões da Atividade
+          </Button>
+          <Button
+            onClick={handleDeleteActivity}
+            disabled={deletingActivity}
+            variant="outline"
+            className="text-red-600 border-red-600 hover:bg-red-50 cursor-pointer"
+          >
+            <Trash2 className="w-4 h-4 mr-2" />
+            Excluir Atividade
           </Button>
         </div>
       </div>

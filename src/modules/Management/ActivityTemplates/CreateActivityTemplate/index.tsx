@@ -51,13 +51,13 @@ export const CreateActivityTemplate = () => {
 
       const hasCorrectAnswer = question.options.some(option => option.is_correct);
       if (!hasCorrectAnswer) {
-        toast.error(`Question ${question.question_order} must have a correct answer selected`);
+        toast.error(`Questão ${question.question_order} deve ter uma resposta correta selecionada`);
         return;
       }
 
       for (const option of question.options) {
         if (!option.option_text.trim()) {
-          toast.error(`All options in question ${question.question_order} must have text`);
+          toast.error(`Todas as opções da questão ${question.question_order} devem ter texto`);
           return;
         }
       }

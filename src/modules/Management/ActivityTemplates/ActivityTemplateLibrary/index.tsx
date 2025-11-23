@@ -3,7 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useFetch } from '@/hooks/useFetch';
 import { useNavigate } from 'react-router';
-import { Loader2, Plus, Eye, Users, Edit } from 'lucide-react';
+import { Loader2, Plus, Eye, Users, Edit, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 type ActivityTemplate = {
   id: string;
@@ -24,6 +25,8 @@ export const ActivityTemplateLibrary = () => {
     fetch: fetchTemplates,
   } = useFetch<ActivityTemplate[]>('/activity-template');
 
+  const { fetch: deleteTemplate, loading: deleting } = useFetch('/activity-template');
+
   useEffect(() => {
     fetchTemplates({ name: 'GET' });
   }, [fetchTemplates]);
@@ -40,6 +43,26 @@ export const ActivityTemplateLibrary = () => {
 
   const handleAssignTemplate = (templateId: string, templateName: string) => {
     navigate(`/management/activity-templates/${templateId}/assign?name=${encodeURIComponent(templateName)}`);
+  };
+
+  const handleDeleteTemplate = async (templateId: string, templateName: string) => {
+    if (!window.confirm(`Tem certeza que deseja excluir o modelo "${templateName}"? Esta ação não pode ser desfeita.`)) {
+      return;
+    }
+
+    try {
+      await deleteTemplate({
+        name: 'DELETE',
+        id: templateId,
+      });
+
+      // Refresh the list
+      fetchTemplates({ name: 'GET' });
+      toast.success(`Modelo "${templateName}" excluído com sucesso!`);
+    } catch (error) {
+      console.error('Error deleting template:', error);
+      alert('Erro ao excluir modelo. Tente novamente.');
+    }
   };
 
   return (
@@ -82,7 +105,7 @@ export const ActivityTemplateLibrary = () => {
                     Criado: {new Date(template.created_at).toLocaleDateString()}
                   </div>
 
-                  <div className="flex space-x-2 pt-2">
+                  <div className="grid grid-cols-2 gap-2">
                     <Button
                       variant="outline"
                       size="sm"
@@ -108,6 +131,16 @@ export const ActivityTemplateLibrary = () => {
                     >
                       <Users className="w-3 h-3 mr-1" />
                       Atribuir
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleDeleteTemplate(template.id, template.name)}
+                      disabled={deleting}
+                      className="text-red-600 border-red-600 hover:bg-red-50 cursor-pointer"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      Excluir
                     </Button>
                   </div>
                 </div>

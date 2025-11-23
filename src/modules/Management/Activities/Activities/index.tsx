@@ -1,10 +1,11 @@
 import classroomImage from '@/assets/images/classroom-children.jpeg?format=webp';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { useFetch } from '@/hooks/useFetch';
 import { useEffect, useState } from 'react';
 import { CreateActivityButton } from './CreateActivityButton';
 import { useNavigate } from 'react-router';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Trash2 } from 'lucide-react';
 
 export const Activities = () => {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ export const Activities = () => {
     created_at: string;
     updated_at: string;
   }[]>('/classroom');
+
+  const { fetch: deleteActivity, loading: deletingActivity } = useFetch('/activity');
 
   const [mappedActivitiesData, setMappedActivitiesData] = useState<{
     created_at: string;
@@ -64,11 +67,30 @@ export const Activities = () => {
     });
   }, [fetchClassrooms]);
 
+  const handleDeleteActivity = async (activityId: string, activityName: string) => {
+    if (!window.confirm(`Tem certeza que deseja excluir a atividade "${activityName}"? Esta ação não pode ser desfeita.`)) {
+      return;
+    }
+
+    try {
+      await deleteActivity({
+        name: 'DELETE',
+        id: activityId,
+      });
+
+      // Refresh the activities list
+      fetchActivities({ name: 'GET' });
+    } catch (error) {
+      console.error('Error deleting activity:', error);
+      alert('Erro ao excluir atividade. Tente novamente.');
+    }
+  };
+
   return (
     <div className="max-w-[40vw] mx-auto flex flex-col gap-4 pt-8 pb-4">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <h1 className="text-5xl font-bold text-center text-lime-700/80">Painel administrativo</h1>
+          <h1 className="text-5xl font-bold text-center text-lime-700/80">Painel do professor</h1>
           <h5 className="text-xl font-bold text-center text-yellow-900/80">Atividades</h5>
         </div>
         <Card className="p-0 overflow-hidden max-h-[50vh]">
@@ -111,11 +133,21 @@ export const Activities = () => {
                 </CardTitle>
                 <CardDescription className="text-white text-center">{activity.description}</CardDescription>
               </CardHeader>
-              <CardFooter className="p-0 m-0">
-                {/* <Button 
-                className="bg-red-700/80 text-white border-none rounded-none hover:bg-red-800/100 cursor-pointer"
-                onClick={() => handleRemoveActivity(activity.id)}
-              >Excluir</Button> */}
+              <CardFooter className="p-2 m-0 flex justify-end">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleDeleteActivity(activity.id, activity.name);
+                  }}
+                  disabled={deletingActivity}
+                  className="text-red-600 border-red-600 hover:bg-red-50 cursor-pointer"
+                >
+                  <Trash2 className="w-3 h-3 mr-1" />
+                  Excluir
+                </Button>
               </CardFooter>
             </Card>
           ))}

@@ -36,13 +36,22 @@ export const Header = () => {
         }}></div>
       )}
       <div className="flex flex-row w-full bg-lime-700/80 py-3 px-10 flex justify-between">
-        <h1 className="text-2xl font-bold text-left text-white cursor-pointer" onClick={() => {
+        {/* <h1 className="text-2xl font-bold text-left text-white cursor-pointer" onClick={() => {
           if (user?.role === 'TEACHER') {
             navigate('/management/home');
           } else {
             navigate('/student/home');
           }
-        }}>SustentaTech</h1>
+        }}>SustentaTech</h1> */}
+        <div className="px-6 cursor-pointer" onClick={() => {
+          if (user?.role === 'TEACHER') {
+            navigate('/management/home');
+          } else {
+            navigate('/student/home');
+          }
+        }}>
+        <img className="w-12 h-8 text-2xl font-bold text-left text-white"  src="/logo-prototipo-1.png" alt="SustentaTech" />
+        </div>
         <div className="flex flex-row gap-4">
           <div
             className="flex flex-row gap-4 items-center rounded-md cursor-pointer relative"
