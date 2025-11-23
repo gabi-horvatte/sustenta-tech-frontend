@@ -2,13 +2,15 @@ import classroomImage from '@/assets/images/classroom-children.jpeg?format=webp'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useFetch } from '@/hooks/useFetch';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CreateActivityButton } from './CreateActivityButton';
 import { useNavigate } from 'react-router';
 import { Loader2, Trash2 } from 'lucide-react';
+import { IAMContext } from '@/modules/IAM/context/context';
 
 export const Activities = () => {
   const navigate = useNavigate();
+  const { user } = useContext(IAMContext);
   const {
     data: activitiesData,
     error: activitiesError,
@@ -90,7 +92,7 @@ export const Activities = () => {
     <div className="max-w-[40vw] mx-auto flex flex-col gap-4 pt-8 pb-4">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <h1 className="text-5xl font-bold text-center text-lime-700/80">Painel do professor</h1>
+          <h1 className="text-5xl font-bold text-center text-lime-700/80">{user?.role === 'TEACHER' && user.manager ? 'Painel administrativo' : 'Painel do professor'}</h1>
           <h5 className="text-xl font-bold text-center text-yellow-900/80">Atividades</h5>
         </div>
         <Card className="p-0 overflow-hidden max-h-[50vh]">
