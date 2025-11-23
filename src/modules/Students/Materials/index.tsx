@@ -1,27 +1,38 @@
 import { useFetch } from '@/hooks/useFetch';
 import { Loader2 } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { Material } from './Material';
-import { materialsContent } from '@/materials';
+import { IAMContext } from '@/modules/IAM/context/context';
+
+type StudentMaterial = {
+  assignment_id: string;
+  material_id: string;
+  name: string;
+  description: string;
+  authors: string;
+  url: string;
+  thumbnail: string | null;
+  material_type: string;
+  expires_at: string;
+  completed_at: string | null;
+};
 
 export const StudentMaterials = () => {
+  const { user } = useContext(IAMContext);
   const {
     data: materialsData,
-    // error: materialsError,
     loading: materialsLoading,
     fetch: fetchMaterials
-  } = useFetch<{
-    id: string;
-    student_id: string;
-    created_at: string;
-    updated_at: string;
-  }[]>(`/material`);
+  } = useFetch<StudentMaterial[]>(`/student-materials`);
 
   useEffect(() => {
-    fetchMaterials({
-      name: 'GET',
-    });
-  }, [fetchMaterials]);
+    if (user?.id) {
+      fetchMaterials({
+        name: 'GET',
+        url: `/student-materials?student_id=${user.id}`,
+      });
+    }
+  }, [fetchMaterials, user?.id]);
 
   return (
     <div className="max-w-[50vw] mx-auto flex flex-col gap-8 pt-8 pb-4">
@@ -33,25 +44,29 @@ export const StudentMaterials = () => {
         materialsLoading ? (
           <div className="flex justify-center items-center">
             <Loader2 className="w-8 h-8 animate-spin" />
-          </div>) : (
-            <div className="grid grid-cols-3 gap-4">
-              {/** a card with two buttons: one to open an external link to go to the activity, another to mark the activity as concluded if it's not concluded yet. it should have a green background if it's concluded and red background if it's not concluded. it should have a check mark if it's concluded and a clock icon if it's not concldued yet */}
-              {materialsContent.map((material) => {
-                const materialAssignment = materialsData?.find((materialAssignment) => materialAssignment.id === material.id);
-                return (
-                  <Material key={material.id} materialAssignment={{
-                    id: material.id,
-                    type: material.type,
-                    thumbnail: material.thumbnail,
-                    title: material.title,
-                    description: material.description,
-                    url: material.url,
-                    completed_at: materialAssignment?.created_at ?? null,
-                  }} />
-                )
-              })}
-            </div>
-          )
+          </div>
+        ) : materialsData && materialsData.length > 0 ? (
+          <div className="grid grid-cols-3 gap-4">
+            {materialsData.map((material) => (
+              <Material
+                key={material.assignment_id}
+                materialAssignment={{
+                  id: material.assignment_id,
+                  type: material.material_type,
+                  thumbnail: material.thumbnail ?? '',
+                  title: material.name,
+                  description: material.description,
+                  url: material.url,
+                  completed_at: material.completed_at ?? null,
+                }}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 text-gray-500">
+            <p>Nenhum material encontrado</p>
+          </div>
+        )
       }
     </div>
   )
