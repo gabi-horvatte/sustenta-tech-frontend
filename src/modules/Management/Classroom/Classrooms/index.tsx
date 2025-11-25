@@ -69,7 +69,10 @@ export const Classrooms = () => {
           <img src={classroomImage} alt="Turmas" className="w-full h-full object-cover object-center" />
         </Card>
         {(classroomsData?.length ?? 0) > 0 ? (
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-2 gap-y-4">
+            <div className="col-span-3">
+                <CreateClassroomButton setOpen={setOpen} />
+              </div>
             {classroomsData?.map((classroom) => (
               <Card
                 key={classroom.id}
