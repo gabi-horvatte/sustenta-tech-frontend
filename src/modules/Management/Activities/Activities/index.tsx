@@ -23,6 +23,7 @@ export const Activities = () => {
     id: string;
     name: string;
     updated_at: string;
+    teacher_name: string;
   }[]>('/activity');
 
   const { data: classroomsData, error: classroomsError, fetch: fetchClassrooms } = useFetch<{
@@ -43,6 +44,7 @@ export const Activities = () => {
     name: string;
     updated_at: string;
     classroom_name: string;
+    teacher_name: string;
   }[]>([]);
 
   useEffect(() => {
@@ -54,6 +56,7 @@ export const Activities = () => {
       classroom_name: classroomsData?.find((classroom) => classroom.id === activity.classroom_id)?.name ?? '',
       created_at: activity.created_at,
       updated_at: activity.updated_at,
+      teacher_name: activity.teacher_name,
     })) ?? []);
   }, [activitiesData, classroomsData]);
 
@@ -133,7 +136,10 @@ export const Activities = () => {
                   >Turma: {activity.classroom_name}
                   </p>
                 </CardTitle>
-                <CardDescription className="text-white text-center">{activity.description}</CardDescription>
+                <CardDescription className="text-white text-center">
+                  <p>Professor: {activity.teacher_name}</p>
+                  <p>{activity.description}</p>
+                </CardDescription>
               </CardHeader>
               <CardFooter className="p-2 m-0 flex justify-end">
                 <Button

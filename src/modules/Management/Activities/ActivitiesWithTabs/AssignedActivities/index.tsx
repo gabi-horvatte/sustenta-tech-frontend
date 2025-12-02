@@ -12,6 +12,7 @@ type Activity = {
   expires_at: string;
   created_at: string;
   classroom_id: string;
+  teacher_name: string;
   activity_template_id: string;
 };
 
@@ -147,7 +148,8 @@ export const AssignedActivities = () => {
                         )}
                       </div>
                       <CardDescription className="line-clamp-2">
-                        {activity.description}
+                        <p>Professor: {activity.teacher_name}</p>
+                        <p>{activity.description}</p>
                       </CardDescription>
                     </CardHeader>
                     

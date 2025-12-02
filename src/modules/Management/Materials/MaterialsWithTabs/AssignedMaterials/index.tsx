@@ -16,6 +16,8 @@ type MaterialAssignment = {
   created_at: string;
   classroom_id: string;
   classroom_name: string;
+  teacher_id: string;
+  teacher_name: string;
 };
 
 type Classroom = {
@@ -106,7 +108,10 @@ export const AssignedMaterials = () => {
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <CardTitle className="text-lg">{assignment.name}</CardTitle>
-                        <CardDescription>{assignment.description}</CardDescription>
+                        <CardDescription>
+                          <p>Professor: {assignment.teacher_name}</p>
+                          <p>{assignment.description}</p>
+                        </CardDescription>
                       </div>
                     </div>
                   </CardHeader>
