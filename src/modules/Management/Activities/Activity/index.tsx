@@ -165,7 +165,7 @@ export const Activity = () => {
                           className="underline font-bold hover:text-lime-700 cursor-pointer"
                           onClick={(e) => {
                             e.stopPropagation(); // Prevent row click
-                            navigate(`/management/classroom/student/${student.student_id}`);
+                            navigate(`/management/classroom/student/${student.student_id}?first_name=${student.student_first_name}&last_name=${student.student_last_name}&birth_date=${student.student_birth_date}&code=${student.student_code}&classroom_id=${student.student_classroom_id}&email=${student.student_email}`);
                           }}
                         >
                           {student.student_name}
